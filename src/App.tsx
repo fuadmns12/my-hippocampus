@@ -21,10 +21,14 @@ import { NotFoundScreen } from "./components/common/NotFoundScreen";
 import { useAppOrchestrator } from "./hooks/useAppOrchestrator";
 import { useGuideActionListener } from "./hooks/useGuideActionListener";
 import { useRoute404Check } from "./hooks/useRoute404Check";
+import { usePageFullscreen } from "./hooks/usePageFullscreen";
 import { MindMapNode } from "./types";
 
 export default function App() {
   const { is404, currentPath, returnToHome } = useRoute404Check();
+
+  // Hook untuk fullscreen HALAMAN (bukan canvas)
+  const { isPageFullscreen, togglePageFullscreen } = usePageFullscreen();
 
   const {
     svgRef,
@@ -96,8 +100,8 @@ export default function App() {
             onOpenUpload={() => inputs.setShowUploadModal(true)}
             isUploadOpen={inputs.showUploadModal}
             onReset={actions.handleReset}
-            onToggleFullscreen={handleToggleFullscreen}
-            isFullscreen={isFullscreen}
+            onToggleFullscreen={togglePageFullscreen}
+            isFullscreen={isPageFullscreen}
             mindMapData={tree.mindMapData}
             activeTab={inputs.activeTab}
             setActiveTab={inputs.setActiveTab}
