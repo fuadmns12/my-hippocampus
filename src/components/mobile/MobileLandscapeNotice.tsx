@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { RotateCw, Smartphone, AlertCircle } from "lucide-react";
+import React from "react";
+import { RotateCw, Smartphone } from "lucide-react";
 import { motion } from "motion/react";
-import { MechanicalButton } from "../common/MechanicalButton";
 import { MobileOrientationState } from "./useMobileOrientation";
 
 interface MobileLandscapeNoticeProps {
@@ -11,23 +10,10 @@ interface MobileLandscapeNoticeProps {
 export const MobileLandscapeNotice: React.FC<MobileLandscapeNoticeProps> = ({
   orientation,
 }) => {
-  const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
-
   const {
     showLandscapeNotice,
     isMobileDevice,
-    requestLandscapeMode,
-    isLocking,
   } = orientation;
-
-  // Handle clicking the "Pindah ke Mode Landscape" button
-  const handleSwitchToLandscape = async () => {
-    setFeedbackMessage(null);
-    const result = await requestLandscapeMode();
-    if (!result.success && result.message) {
-      setFeedbackMessage(result.message);
-    }
-  };
 
   // If on desktop or already in landscape mode, do not render modal
   if (!isMobileDevice) return null;
@@ -86,29 +72,14 @@ export const MobileLandscapeNotice: React.FC<MobileLandscapeNoticeProps> = ({
               </p>
             </div>
 
-            {/* Interactive Feedback Message if OS needs manual rotation */}
-            {feedbackMessage && (
-              <div className="w-full p-2.5 rounded-xl bg-amber-950/40 border border-amber-500/50 text-amber-200 text-xs text-left flex items-start gap-2 animate-fade-in">
-                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-amber-400" />
-                <span>{feedbackMessage}</span>
-              </div>
-            )}
-
-            {/* Action Button: Button to Switch to Landscape */}
-            <div className="w-full pt-1">
-              <MechanicalButton
-                id="btn-switch-to-landscape"
-                size="md"
-                variant="cyan"
-                showAmbient={true}
-                disabled={isLocking}
-                onClick={handleSwitchToLandscape}
-                className="w-full flex items-center justify-center py-2.5"
-              >
-                <span className="font-semibold">
-                  {isLocking ? "Mengatur Layar..." : "Pindah ke Mode Landscape"}
-                </span>
-              </MechanicalButton>
+            {/* Interactive Feedback Message */}
+            <div className="w-full p-3 rounded-xl bg-cyan-950/40 border border-cyan-500/50 text-cyan-200 text-xs text-center leading-relaxed">
+              <p className="font-medium">
+                Silakan putar ponsel Anda ke posisi horizontal (landscape) secara manual.
+              </p>
+              <p className="text-cyan-300/80 mt-1.5">
+                Website akan otomatis aktif setelah layar dalam mode landscape.
+              </p>
             </div>
           </div>
         </aside>

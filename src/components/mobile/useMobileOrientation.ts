@@ -8,10 +8,7 @@ export interface MobileOrientationState {
   isPortrait: boolean;
   isLandscape: boolean;
   showLandscapeNotice: boolean;
-  lockSupported: boolean;
-  isLocking: boolean;
   noticeDismissed: boolean;
-  requestLandscapeMode: () => Promise<{ success: boolean; message?: string }>;
   dismissNotice: () => void;
   openNotice: () => void;
 }
@@ -22,8 +19,6 @@ export function useMobileOrientation(): MobileOrientationState {
   const [isPortrait, setIsPortrait] = useState<boolean>(false);
   const [showLandscapeNotice, setShowLandscapeNotice] = useState<boolean>(false);
   const [noticeDismissed, setNoticeDismissed] = useState<boolean>(false);
-  const [isLocking, setIsLocking] = useState<boolean>(false);
-  const [lockSupported, setLockSupported] = useState<boolean>(false);
 
   // Check orientation and device type
   const checkState = useCallback(() => {
@@ -65,15 +60,8 @@ export function useMobileOrientation(): MobileOrientationState {
     // If mobile & in portrait, strictly enforce landscape (no portrait allowed)
     if (isMobile && isCurrentPortrait) {
       setShowLandscapeNotice(true);
-      
-      // Auto-attempt to lock orientation to landscape (silent)
-      if (hasLockApi) {
-        (screen.orientation as any).lock("landscape").catch(() => {
-          // Gagal auto-lock, user harus klik tombol manual
-        });
-      }
     } else if (isMobile && !isCurrentPortrait) {
-      // Once in landscape, automatically close prompt
+      // Once in landscape, automatically close prompt and maintain lock
       setShowLandscapeNotice(false);
       setNoticeDismissed(false);
       
@@ -128,71 +116,6 @@ export function useMobileOrientation(): MobileOrientationState {
     };
   }, [checkState]);
 
-  // Request rotation to landscape mode
-  const requestLandscapeMode = useCallback(async (): Promise<{
-    success: boolean;
-    message?: string;
-  }> => {
-    setIsLocking(true);
-    hapticFx.trigger("medium");
-
-    try {
-      // Try Screen Orientation Lock API first (without fullscreen)
-      if (
-        typeof screen !== "undefined" &&
-        screen.orientation &&
-        typeof (screen.orientation as any).lock === "function"
-      ) {
-        try {
-          // Coba lock tanpa fullscreen dulu
-          await (screen.orientation as any).lock("landscape");
-          setIsLocking(false);
-          setShowLandscapeNotice(false);
-          hapticFx.trigger("success");
-          return { success: true };
-        } catch (lockErr: any) {
-          // Jika gagal tanpa fullscreen, coba dengan fullscreen
-          console.log("Lock tanpa fullscreen gagal, coba dengan fullscreen...");
-          
-          const docEl = document.documentElement as any;
-          if (!document.fullscreenElement && docEl) {
-            if (docEl.requestFullscreen) {
-              await docEl.requestFullscreen().catch(() => {});
-            } else if (docEl.webkitRequestFullscreen) {
-              await docEl.webkitRequestFullscreen().catch(() => {});
-            }
-          }
-          
-          // Tunggu sebentar untuk fullscreen aktif
-          await new Promise(resolve => setTimeout(resolve, 200));
-          
-          // Coba lock lagi setelah fullscreen
-          await (screen.orientation as any).lock("landscape");
-          setIsLocking(false);
-          setShowLandscapeNotice(false);
-          hapticFx.trigger("success");
-          return { success: true };
-        }
-      }
-
-      // If Screen Orientation Lock is not supported (e.g. iOS Safari)
-      setIsLocking(false);
-      return {
-        success: false,
-        message:
-          "Putar perangkat Anda ke posisi horizontal (Landscape) dan pastikan rotasi otomatis diaktifkan.",
-      };
-    } catch (err: any) {
-      setIsLocking(false);
-      console.warn("Orientation lock error:", err);
-      return {
-        success: false,
-        message:
-          "Putar perangkat Anda ke posisi horizontal (Landscape) dan pastikan rotasi otomatis diaktifkan.",
-      };
-    }
-  }, []);
-
   const dismissNotice = useCallback(() => {
     hapticFx.trigger("light");
     setNoticeDismissed(true);
@@ -211,10 +134,7 @@ export function useMobileOrientation(): MobileOrientationState {
     isPortrait,
     isLandscape: !isPortrait,
     showLandscapeNotice: isMobileDevice && isPortrait && showLandscapeNotice,
-    lockSupported,
-    isLocking,
     noticeDismissed,
-    requestLandscapeMode,
     dismissNotice,
     openNotice,
   };
