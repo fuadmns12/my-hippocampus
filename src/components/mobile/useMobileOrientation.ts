@@ -104,30 +104,45 @@ export function useMobileOrientation(): MobileOrientationState {
     hapticFx.trigger("medium");
 
     try {
-      // Step 1: Request Fullscreen if not already fullscreen (required for lock API on Android/Chrome)
-      const docEl = document.documentElement as any;
-      if (!document.fullscreenElement && docEl) {
-        if (docEl.requestFullscreen) {
-          await docEl.requestFullscreen().catch(() => {});
-        } else if (docEl.webkitRequestFullscreen) {
-          await docEl.webkitRequestFullscreen().catch(() => {});
-        }
-      }
-
-      // Step 2: Try Screen Orientation Lock API
+      // Try Screen Orientation Lock API first (without fullscreen)
       if (
         typeof screen !== "undefined" &&
         screen.orientation &&
         typeof (screen.orientation as any).lock === "function"
       ) {
-        await (screen.orientation as any).lock("landscape");
-        setIsLocking(false);
-        setShowLandscapeNotice(false);
-        hapticFx.trigger("success");
-        return { success: true };
+        try {
+          // Coba lock tanpa fullscreen dulu
+          await (screen.orientation as any).lock("landscape");
+          setIsLocking(false);
+          setShowLandscapeNotice(false);
+          hapticFx.trigger("success");
+          return { success: true };
+        } catch (lockErr: any) {
+          // Jika gagal tanpa fullscreen, coba dengan fullscreen
+          console.log("Lock tanpa fullscreen gagal, coba dengan fullscreen...");
+          
+          const docEl = document.documentElement as any;
+          if (!document.fullscreenElement && docEl) {
+            if (docEl.requestFullscreen) {
+              await docEl.requestFullscreen().catch(() => {});
+            } else if (docEl.webkitRequestFullscreen) {
+              await docEl.webkitRequestFullscreen().catch(() => {});
+            }
+          }
+          
+          // Tunggu sebentar untuk fullscreen aktif
+          await new Promise(resolve => setTimeout(resolve, 200));
+          
+          // Coba lock lagi setelah fullscreen
+          await (screen.orientation as any).lock("landscape");
+          setIsLocking(false);
+          setShowLandscapeNotice(false);
+          hapticFx.trigger("success");
+          return { success: true };
+        }
       }
 
-      // Step 3: If Screen Orientation Lock is not supported (e.g. iOS Safari)
+      // If Screen Orientation Lock is not supported (e.g. iOS Safari)
       setIsLocking(false);
       return {
         success: false,
