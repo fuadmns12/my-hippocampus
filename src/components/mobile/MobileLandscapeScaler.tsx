@@ -28,7 +28,9 @@ export const MobileLandscapeScaler: React.FC<MobileLandscapeScalerProps> = ({
   const isTablet = orientation.isTabletDevice;
 
   // Active scaling applies to mobile smartphone in landscape OR tablet devices
-  const isScalingActive = isMobileLandscape || isTablet;
+  // DINONAKTIFKAN: Scaling membuat scroll tidak natural dengan pinch gesture
+  // Biarkan website tampil responsive normal tanpa zoom
+  const isScalingActive = false; // was: isMobileLandscape || isTablet;
 
   useEffect(() => {
     if (typeof CSS !== "undefined" && typeof CSS.supports === "function") {
