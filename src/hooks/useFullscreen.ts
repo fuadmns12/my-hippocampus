@@ -18,6 +18,23 @@ export function useFullscreen() {
         document.exitFullscreen().catch(() => {});
       }
       setIsFullscreen(false);
+      
+      // Re-lock orientation ke landscape setelah keluar fullscreen (untuk HP)
+      // Ini mencegah orientation kembali ke portrait
+      if (device.isMobile || device.isTablet) {
+        setTimeout(() => {
+          if (
+            typeof screen !== "undefined" &&
+            screen.orientation &&
+            typeof (screen.orientation as any).lock === "function"
+          ) {
+            (screen.orientation as any).lock("landscape").catch(() => {
+              // Gagal re-lock, biarkan saja (user bisa manual rotate)
+              console.log("Re-lock orientation gagal setelah exit fullscreen");
+            });
+          }
+        }, 300); // Delay 300ms untuk stabilitas
+      }
     }
   }, [isFullscreen]);
 
