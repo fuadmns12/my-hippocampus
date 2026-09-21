@@ -25,8 +25,18 @@ export interface HeaderProps {
   isHistoryOpen?: boolean;
   isUploadOpen?: boolean;
   onReset?: () => void;
+  /** Toggle fullscreen SELURUH HALAMAN (tombol `#btn-fullscreen-page`), bukan fullscreen kanvas. */
   onToggleFullscreen?: () => void;
+  /**
+   * Mode KANVAS FOKUS aktif (tombol `#btn-canvas-fullscreen-toggle`) → header disembunyikan
+   * supaya kanvas mengisi seluruh layar. Berbeda dengan `isPageFullscreen`.
+   */
   isFullscreen: boolean;
+  /**
+   * Fullscreen SELURUH HALAMAN aktif → header tetap tampil (hanya status tombolnya berubah),
+   * karena seluruh halaman termasuk header memang ikut layar penuh.
+   */
+  isPageFullscreen?: boolean;
   mindMapData: MindMapData | null;
   activeTab?: "canvas" | "outline";
   setActiveTab?: (tab: "canvas" | "outline") => void;
@@ -56,6 +66,7 @@ export const Header: React.FC<HeaderProps> = ({
   isUploadOpen = false,
   onToggleFullscreen,
   isFullscreen,
+  isPageFullscreen = false,
   mindMapData,
   isInputCollapsed = false,
   onToggleInputCollapse,
@@ -78,6 +89,8 @@ export const Header: React.FC<HeaderProps> = ({
 
   const isPanelOpen = !isInputCollapsed || isLayoutThemeOpen;
 
+  // Mode KANVAS FOKUS: kanvas mengisi seluruh layar (overlay 100vw x 100vh),
+  // sehingga header disembunyikan. Mode FULLSCREEN SELURUH HALAMAN tidak menyembunyikan header.
   if (isFullscreen) return null;
 
   return (
@@ -132,6 +145,7 @@ export const Header: React.FC<HeaderProps> = ({
             onOpenGuide={() => setShowGuideModal(true)}
             onOpenSettings={() => setShowSettingsModal(true)}
             onToggleFullscreenPage={onToggleFullscreen}
+            isPageFullscreen={isPageFullscreen}
             isHistoryOpen={isHistoryOpen}
             isUploadOpen={isUploadOpen}
             isGuideOpen={showGuideModal}

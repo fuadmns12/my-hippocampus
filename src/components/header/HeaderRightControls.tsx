@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { HardDrive, Upload, HelpCircle, Settings, Maximize2 } from "lucide-react";
+import { HardDrive, Upload, HelpCircle, Settings, Maximize2, Minimize2 } from "lucide-react";
 import { PresetTemplate, MindMapData } from "../../types";
 import { PresetSelectorDropdown } from "./PresetSelectorDropdown";
 import { HeaderSaveButton } from "./HeaderSaveButton";
@@ -21,7 +21,10 @@ export interface HeaderRightControlsProps {
   onExportMarkdown: () => void;
   onOpenGuide: () => void;
   onOpenSettings: () => void;
+  /** Toggle fullscreen SELURUH HALAMAN (tombol `#btn-fullscreen-page`). */
   onToggleFullscreenPage?: () => void;
+  /** Status fullscreen SELURUH HALAMAN aktif (untuk ikon & label tombol). */
+  isPageFullscreen?: boolean;
   isHistoryOpen?: boolean;
   isUploadOpen?: boolean;
   isGuideOpen?: boolean;
@@ -44,6 +47,7 @@ export const HeaderRightControls: React.FC<HeaderRightControlsProps> = ({
   onOpenGuide,
   onOpenSettings,
   onToggleFullscreenPage,
+  isPageFullscreen = false,
   isHistoryOpen = false,
   isUploadOpen = false,
   isGuideOpen = false,
@@ -183,21 +187,30 @@ export const HeaderRightControls: React.FC<HeaderRightControlsProps> = ({
         PANDUAN
       </MechanicalButton>
 
-      {/* Tombol Fullscreen Seluruh Halaman */}
+      {/* Tombol Fullscreen SELURUH HALAMAN (Page Fullscreen, bukan mode kanvas fokus) */}
       {onToggleFullscreenPage && (
         <MechanicalButton
           id="btn-fullscreen-page"
           type="button"
           size="xs"
           variant="cyan"
+          active={isPageFullscreen}
           onClick={() => {
             setShowPresetMenu(false);
             setShowExportMenu(false);
             onToggleFullscreenPage();
           }}
-          title="Layar Penuh Seluruh Halaman (F11 atau ESC untuk keluar)"
+          title={
+            isPageFullscreen
+              ? "Keluar dari Layar Penuh Seluruh Halaman (ESC)"
+              : "Layar Penuh Seluruh Halaman (semua panel tetap tampil)"
+          }
           icon={
-            <Maximize2 className="w-3.5 h-3.5 text-white" />
+            isPageFullscreen ? (
+              <Minimize2 className="w-3.5 h-3.5 text-cyan-400" />
+            ) : (
+              <Maximize2 className="w-3.5 h-3.5 text-white" />
+            )
           }
         >
           FULLSCREEN

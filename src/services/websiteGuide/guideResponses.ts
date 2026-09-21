@@ -114,7 +114,8 @@ export const CANVAS_NAVIGATION_REPLY = `### 🔍 Navigasi & Interaksi pada Kanva
 - **Perbesar / Perkecil (Zoom)**: Putar roda mouse (*scroll wheel*) atau gunakan tombol kontrol zoom di pojok kanvas.
 - **Pindahkan Kartu (Drag & Drop)**: Klik dan tahan kartu apa saja untuk memindahkan posisinya secara bebas.
 - **Lipat / Sembunyikan Cabang (Collapse)**: Klik tombol lingkaran kecil bergaris minus **(-)** pada cabang untuk melipat sub-cabangnya. Klik tanda plus **(+)** untuk membukanya kembali.
-- **Layar Penuh (Fullscreen)**: Tekan tombol **Layar Penuh** di pojok kanan atas kanvas untuk menyembunyikan browser dan fokus penuh pada kanvas secara edge-to-edge.
+- **Mode Kanvas Fokus (Layar Penuh Kanvas)**: Tekan tombol ikon **Maximize2** di pojok kanan atas kanvas untuk menyembunyikan panel dan fokus penuh pada kanvas secara edge-to-edge (pada perangkat tanpa Fullscreen API, mode ini berjalan sebagai layar penuh in-app).
+- **Layar Penuh Seluruh Halaman**: Tekan tombol **FULLSCREEN** di header untuk membuat seluruh halaman masuk mode layar penuh browser — header, panel input, dan kanvas tetap tampil dan dapat dipakai seperti biasa.
 - **Fit Kanvas Otomatis**: Tekan tombol *Pusatkan Tampilan* di kontrol pojok kanan bawah kanvas agar seluruh mind map terpusat rapi.
 - **Urungkan & Ulangi**: Gunakan tombol panah melengkung **Undo / Redo** di bilah bawah kanvas untuk membatalkan/mengulang perubahan.`;
 

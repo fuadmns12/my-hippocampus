@@ -1,53 +1,70 @@
 import { useState, useEffect, useCallback } from "react";
 import { device } from "../utils/deviceDetection";
+import {
+  FULLSCREEN_CHANGE_EVENTS,
+  exitNativeFullscreen,
+  isAnyFullscreenActive,
+  requestElementFullscreen,
+  scheduleLandscapeRelock,
+} from "../utils/fullscreenHelper";
 
+/**
+ * Hook MODE KANVAS FOKUS (canvas fullscreen) — tombol `#btn-canvas-fullscreen-toggle`
+ * di dalam kanvas mind map.
+ *
+ * Berbeda dengan `usePageFullscreen` (tombol FULLSCREEN di header) yang mengaktifkan
+ * layar penuh SELURUH HALAMAN tanpa menyembunyikan apa pun. Pada mode kanvas fokus ini
+ * header serta panel input/tata letak disembunyikan dan kanvas mengisi 100vw x 100vh.
+ */
 export function useFullscreen() {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const handleToggleFullscreen = useCallback(() => {
     if (!isFullscreen) {
-      if (!device.needsPseudoFullscreen && document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen().catch(() => {
-          // Fallback to in-app pseudo fullscreen if rejected by browser
-          setIsFullscreen(true);
+      // Fullscreen native tetap ditargetkan ke documentElement (bukan elemen kanvas) agar
+      // modal, drawer, toast, dan FAB yang dirender DI LUAR #canvas-container tetap tampil
+      // di atas top-layer. Perangkat tanpa Fullscreen API (mis. iPhone Safari) memakai
+      // pseudo fullscreen in-app melalui overlay 100vw x 100vh di MindMapCanvas.
+      if (!device.needsPseudoFullscreen) {
+        requestElementFullscreen(document.documentElement).catch(() => {
+          // Ditolak/diblokir browser → tetap lanjut dengan pseudo fullscreen in-app
         });
       }
       setIsFullscreen(true);
     } else {
-      if (document.exitFullscreen && document.fullscreenElement) {
-        document.exitFullscreen().catch(() => {});
+      if (isAnyFullscreenActive()) {
+        exitNativeFullscreen().catch(() => {});
       }
       setIsFullscreen(false);
       
-      // Re-lock orientation ke landscape setelah keluar fullscreen (untuk HP)
-      // Ini mencegah orientation kembali ke portrait
+      // Re-lock orientasi ke landscape setelah keluar fullscreen (HP/tablet),
+      // supaya tampilan tidak langsung kembali ke portrait.
       if (device.isMobile || device.isTablet) {
-        setTimeout(() => {
-          if (
-            typeof screen !== "undefined" &&
-            screen.orientation &&
-            typeof (screen.orientation as any).lock === "function"
-          ) {
-            (screen.orientation as any).lock("landscape").catch(() => {
-              // Gagal re-lock, biarkan saja (user bisa manual rotate)
-              console.log("Re-lock orientation gagal setelah exit fullscreen");
-            });
-          }
-        }, 300); // Delay 300ms untuk stabilitas
+        scheduleLandscapeRelock(300);
       }
     }
   }, [isFullscreen]);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      const isFull = !!document.fullscreenElement;
-      setIsFullscreen(isFull);
+      // Pada perangkat pseudo fullscreen (mis. iPhone Safari) event fullscreen bisa berasal
+      // dari elemen lain (mis. video) sehingga tidak boleh menutup mode kanvas fokus.
+      if (device.needsPseudoFullscreen) return;
+
+      // Mode kanvas hanya DITUTUP saat fullscreen native berakhir (mis. tombol ESC).
+      // Efek ini sengaja tidak pernah MENYALAKAN mode kanvas, sehingga menekan tombol
+      // FULLSCREEN di header (page fullscreen) tidak ikut memicu mode kanvas fokus.
+      setIsFullscreen((prev) => (prev ? isAnyFullscreenActive() : prev));
     };
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
-    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+
+    FULLSCREEN_CHANGE_EVENTS.forEach((eventName) =>
+      document.addEventListener(eventName, handleFullscreenChange)
+    );
+
     return () => {
-      document.removeEventListener("fullscreenchange", handleFullscreenChange);
-      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+      FULLSCREEN_CHANGE_EVENTS.forEach((eventName) =>
+        document.removeEventListener(eventName, handleFullscreenChange)
+      );
     };
   }, []);
 

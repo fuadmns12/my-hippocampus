@@ -1,90 +1,70 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
+import { device } from "../utils/deviceDetection";
+import {
+  FULLSCREEN_CHANGE_EVENTS,
+  exitNativeFullscreen,
+  isPageFullscreenActive,
+  lockLandscapeOrientation,
+  requestElementFullscreen,
+  scheduleLandscapeRelock,
+} from "../utils/fullscreenHelper";
 
 /**
- * Hook untuk fullscreen SELURUH HALAMAN web (page fullscreen)
- * Berbeda dengan canvas fullscreen yang hanya fullscreen area kanvas SVG
+ * Hook FULLSCREEN SELURUH HALAMAN (page fullscreen) — tombol `#btn-fullscreen-page` di header.
+ *
+ * Mengaktifkan layar penuh native pada `document.documentElement`, sehingga SELURUH HALAMAN
+ * (header, panel input, kanvas, drawer) ikut penuh dan tidak ada elemen aplikasi yang
+ * disembunyikan. Berbeda dengan Mode Kanvas Fokus (`useFullscreen`) yang hanya memfokuskan
+ * area kanvas mind map.
  */
 export function usePageFullscreen() {
   const [isPageFullscreen, setIsPageFullscreen] = useState(false);
 
-  // Cek status fullscreen saat ini
+  // Sinkronkan status tombol dengan fullscreen native (perubahan dari ESC, F11, atau aksi luar)
   useEffect(() => {
-    const checkFullscreen = () => {
-      const isNowFullscreen = Boolean(
-        document.fullscreenElement ||
-        (document as any).webkitFullscreenElement ||
-        (document as any).mozFullScreenElement ||
-        (document as any).msFullscreenElement
-      );
-      setIsPageFullscreen(isNowFullscreen);
+    const handleFullscreenChange = () => {
+      setIsPageFullscreen(isPageFullscreenActive());
     };
 
-    checkFullscreen();
+    handleFullscreenChange();
 
-    // Listen perubahan fullscreen (ESC, F11, dll)
-    document.addEventListener('fullscreenchange', checkFullscreen);
-    document.addEventListener('webkitfullscreenchange', checkFullscreen);
-    document.addEventListener('mozfullscreenchange', checkFullscreen);
-    document.addEventListener('MSFullscreenChange', checkFullscreen);
+    FULLSCREEN_CHANGE_EVENTS.forEach((eventName) =>
+      document.addEventListener(eventName, handleFullscreenChange)
+    );
 
     return () => {
-      document.removeEventListener('fullscreenchange', checkFullscreen);
-      document.removeEventListener('webkitfullscreenchange', checkFullscreen);
-      document.removeEventListener('mozfullscreenchange', checkFullscreen);
-      document.removeEventListener('MSFullscreenChange', checkFullscreen);
+      FULLSCREEN_CHANGE_EVENTS.forEach((eventName) =>
+        document.removeEventListener(eventName, handleFullscreenChange)
+      );
     };
   }, []);
 
   // Toggle fullscreen seluruh halaman
   const togglePageFullscreen = useCallback(async () => {
     try {
-      if (!isPageFullscreen) {
-        // Enter fullscreen - target document.documentElement (seluruh halaman HTML)
-        const docElement = document.documentElement;
-        
-        if (docElement.requestFullscreen) {
-          await docElement.requestFullscreen();
-        } else if ((docElement as any).webkitRequestFullscreen) {
-          await (docElement as any).webkitRequestFullscreen();
-        } else if ((docElement as any).mozRequestFullScreen) {
-          await (docElement as any).mozRequestFullScreen();
-        } else if ((docElement as any).msRequestFullscreen) {
-          await (docElement as any).msRequestFullscreen();
-        }
+      if (!isPageFullscreenActive()) {
+        // Masuk fullscreen: target `documentElement` = SELURUH HALAMAN web (semua elemen ikut)
+        await requestElementFullscreen(document.documentElement);
 
-        // Di HP: Lock landscape saat fullscreen halaman (jika mendukung)
-        if ('orientation' in screen && 'lock' in screen.orientation) {
-          try {
-            await (screen.orientation as any).lock('landscape').catch(() => {
-              // Ignore error jika tidak didukung
-            });
-          } catch {}
+        // Di HP/tablet: kunci orientasi landscape saat fullscreen halaman (jika didukung)
+        if (device.isMobile || device.isTablet) {
+          await lockLandscapeOrientation();
         }
       } else {
-        // Exit fullscreen
-        if (document.exitFullscreen) {
-          await document.exitFullscreen();
-        } else if ((document as any).webkitExitFullscreen) {
-          await (document as any).webkitExitFullscreen();
-        } else if ((document as any).mozCancelFullScreen) {
-          await (document as any).mozCancelFullScreen();
-        } else if ((document as any).msExitFullscreen) {
-          await (document as any).msExitFullscreen();
-        }
+        // Keluar fullscreen
+        await exitNativeFullscreen();
 
-        // Di HP: Re-lock landscape setelah keluar fullscreen (delay 300ms)
-        if ('orientation' in screen && 'lock' in screen.orientation) {
-          setTimeout(async () => {
-            try {
-              await (screen.orientation as any).lock('landscape').catch(() => {});
-            } catch {}
-          }, 300);
+        // Re-lock orientasi landscape setelah keluar fullscreen (HP/tablet, delay 300ms)
+        if (device.isMobile || device.isTablet) {
+          scheduleLandscapeRelock(300);
         }
       }
+
+      setIsPageFullscreen(isPageFullscreenActive());
     } catch (err) {
-      console.warn('Fullscreen halaman tidak didukung atau diblokir:', err);
+      console.warn("Fullscreen halaman tidak didukung atau diblokir:", err);
     }
-  }, [isPageFullscreen]);
+  }, []);
 
   return {
     isPageFullscreen,

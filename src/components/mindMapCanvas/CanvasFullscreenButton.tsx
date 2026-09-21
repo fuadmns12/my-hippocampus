@@ -50,18 +50,16 @@ export const CanvasFullscreenButton: React.FC<CanvasFullscreenButtonProps> = ({
         title={
           isFullscreen
             ? device.hasPhysicalEscKey
-              ? "Keluar Layar Penuh (ESC)"
-              : "Keluar Layar Penuh"
-            : device.needsPseudoFullscreen
-            ? "Layar Penuh (Mode Kanvas Fokus)"
-            : "Layar Penuh"
+              ? "Keluar Layar Penuh Kanvas (Mode Kanvas Fokus, ESC)"
+              : "Keluar Layar Penuh Kanvas (Mode Kanvas Fokus)"
+            : "Layar Penuh Kanvas (Mode Kanvas Fokus)"
         }
         aria-label={
           isFullscreen
             ? device.hasPhysicalEscKey
-              ? "Keluar Layar Penuh (ESC)"
-              : "Keluar Layar Penuh"
-            : "Layar Penuh"
+              ? "Keluar Layar Penuh Kanvas (Mode Kanvas Fokus, ESC)"
+              : "Keluar Layar Penuh Kanvas (Mode Kanvas Fokus)"
+            : "Layar Penuh Kanvas (Mode Kanvas Fokus)"
         }
         className={`inline-flex items-center justify-center p-2 rounded-xl transition-all duration-150 active:scale-95 shadow-lg border backdrop-blur-md cursor-pointer select-none ${
           isFullscreen

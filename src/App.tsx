@@ -27,7 +27,7 @@ import { MindMapNode } from "./types";
 export default function App() {
   const { is404, currentPath, returnToHome } = useRoute404Check();
 
-  // Hook untuk fullscreen HALAMAN (bukan canvas)
+  // Hook untuk fullscreen HALAMAN (tombol FULLSCREEN di header, bukan mode kanvas fokus)
   const { isPageFullscreen, togglePageFullscreen } = usePageFullscreen();
 
   const {
@@ -101,7 +101,8 @@ export default function App() {
             isUploadOpen={inputs.showUploadModal}
             onReset={actions.handleReset}
             onToggleFullscreen={togglePageFullscreen}
-            isFullscreen={isPageFullscreen}
+            isFullscreen={isFullscreen}
+            isPageFullscreen={isPageFullscreen}
             mindMapData={tree.mindMapData}
             activeTab={inputs.activeTab}
             setActiveTab={inputs.setActiveTab}
