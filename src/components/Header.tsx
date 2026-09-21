@@ -54,6 +54,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenUpload,
   isHistoryOpen = false,
   isUploadOpen = false,
+  onToggleFullscreen,
   isFullscreen,
   mindMapData,
   isInputCollapsed = false,
