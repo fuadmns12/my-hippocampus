@@ -65,10 +65,24 @@ export function useMobileOrientation(): MobileOrientationState {
     // If mobile & in portrait, strictly enforce landscape (no portrait allowed)
     if (isMobile && isCurrentPortrait) {
       setShowLandscapeNotice(true);
+      
+      // Auto-attempt to lock orientation to landscape (silent)
+      if (hasLockApi) {
+        (screen.orientation as any).lock("landscape").catch(() => {
+          // Gagal auto-lock, user harus klik tombol manual
+        });
+      }
     } else if (isMobile && !isCurrentPortrait) {
       // Once in landscape, automatically close prompt
       setShowLandscapeNotice(false);
       setNoticeDismissed(false);
+      
+      // Keep landscape locked setiap saat
+      if (hasLockApi) {
+        (screen.orientation as any).lock("landscape").catch(() => {
+          console.log("Maintain landscape lock");
+        });
+      }
     }
   }, []);
 
@@ -85,6 +99,25 @@ export function useMobileOrientation(): MobileOrientationState {
     if (typeof screen !== "undefined" && screen.orientation) {
       screen.orientation.addEventListener("change", handleResizeOrRotate);
     }
+
+    // Initial lock saat pertama kali load (jika sudah landscape)
+    setTimeout(() => {
+      const device = getDeviceInfo(true);
+      const isMobile = device.isMobile || Math.min(window.innerWidth, window.innerHeight) <= 550;
+      const isCurrentLandscape = window.innerWidth > window.innerHeight;
+      
+      if (isMobile && isCurrentLandscape) {
+        if (
+          typeof screen !== "undefined" &&
+          screen.orientation &&
+          typeof (screen.orientation as any).lock === "function"
+        ) {
+          (screen.orientation as any).lock("landscape").catch(() => {
+            console.log("Initial landscape lock attempt");
+          });
+        }
+      }
+    }, 500);
 
     return () => {
       window.removeEventListener("resize", handleResizeOrRotate);
