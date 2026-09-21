@@ -103,9 +103,12 @@ export const MindMapCanvas: React.FC<MindMapCanvasProps> = ({
         isFullscreen
           ? "fixed inset-0 z-40 w-screen h-screen rounded-none border-0"
           : "relative w-full h-[480px] sm:h-[600px] lg:h-[720px] rounded-2xl border border-cyan-500/40 scroll-mt-20"
-      } overflow-hidden select-none touch-none cursor-grab active:cursor-grabbing shadow-2xl transition-all ${
+      } overflow-hidden select-none cursor-grab active:cursor-grabbing shadow-2xl transition-all ${
         isLightMode ? "bg-slate-50 border-slate-300" : palette.canvasBg
       }`}
+      style={{
+        touchAction: 'pan-y pan-x', // Allow scroll dengan 1 jari, prevent zoom pinch
+      }}
       onMouseDown={viewportState.handleMouseDown}
       id="canvas-container"
       data-fullscreen={isFullscreen ? "true" : undefined}
