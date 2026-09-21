@@ -93,6 +93,14 @@ export function useContainerInteractions({
         }
 
         interactionRef.current.mode = "pan";
+        // Simpan titik awal sentuhan (client px) agar niat gestur 1 jari bisa dibedakan:
+        // scroll halaman (gerakan vertikal) vs pan kanvas (gerakan horizontal).
+        // Keputusannya diambil di useGlobalInteractionListeners saat touchmove.
+        interactionRef.current.touchStartClientPos = {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY,
+        };
+        interactionRef.current.touchAxisDecided = false;
         interactionRef.current.panStart = {
           x: e.touches[0].clientX - pan.x,
           y: e.touches[0].clientY - pan.y,
@@ -114,6 +122,7 @@ export function useContainerInteractions({
         setIsPanning(false);
 
         interactionRef.current.mode = "pinch";
+        interactionRef.current.touchAxisDecided = true;
         interactionRef.current.pinchStartDistance = dist;
         interactionRef.current.pinchStartZoom = zoom;
         interactionRef.current.pinchStartPan = { ...pan };
@@ -156,6 +165,7 @@ export function useContainerInteractions({
       }
 
       interactionRef.current.mode = "pan";
+      interactionRef.current.touchAxisDecided = true; // gestur mouse tidak memakai logika scroll halaman
       interactionRef.current.panStart = { x: e.clientX - pan.x, y: e.clientY - pan.y };
       setIsPanning(true);
       setDragStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });

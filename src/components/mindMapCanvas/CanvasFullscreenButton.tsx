@@ -3,6 +3,7 @@ import { Maximize2, Minimize2 } from "lucide-react";
 import { soundFx } from "../../utils/soundEffects";
 import { device } from "../../utils/deviceDetection";
 import { useThemeMode } from "../../context/ThemeModeContext";
+import { IconActionButton } from "../common/IconActionButton";
 
 interface CanvasFullscreenButtonProps {
   isFullscreen: boolean;
@@ -39,14 +40,10 @@ export const CanvasFullscreenButton: React.FC<CanvasFullscreenButtonProps> = ({
           untuk keluar
         </span>
       )}
-      <button
+      <IconActionButton
         id="btn-canvas-fullscreen-toggle"
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          soundFx.play("click");
-          onToggleFullscreen();
-        }}
+        isActive={isFullscreen}
+        icon={isFullscreen ? Minimize2 : Maximize2}
         title={
           isFullscreen
             ? device.hasPhysicalEscKey
@@ -54,29 +51,19 @@ export const CanvasFullscreenButton: React.FC<CanvasFullscreenButtonProps> = ({
               : "Keluar Layar Penuh Kanvas (Mode Kanvas Fokus)"
             : "Layar Penuh Kanvas (Mode Kanvas Fokus)"
         }
-        aria-label={
+        ariaLabel={
           isFullscreen
             ? device.hasPhysicalEscKey
               ? "Keluar Layar Penuh Kanvas (Mode Kanvas Fokus, ESC)"
               : "Keluar Layar Penuh Kanvas (Mode Kanvas Fokus)"
             : "Layar Penuh Kanvas (Mode Kanvas Fokus)"
         }
-        className={`inline-flex items-center justify-center p-2 rounded-xl transition-all duration-150 active:scale-95 shadow-lg border backdrop-blur-md cursor-pointer select-none ${
-          isFullscreen
-            ? isLight
-              ? "bg-white text-amber-700 border-amber-400 hover:bg-amber-50"
-              : "bg-black text-white border-amber-500/40 hover:bg-neutral-900 hover:border-amber-400"
-            : isLight
-            ? "bg-white text-slate-700 border-slate-300 hover:bg-slate-50 hover:border-cyan-500 hover:text-cyan-700 shadow-slate-200/50"
-            : "bg-black text-white border border-cyan-500/40 hover:bg-neutral-900 hover:border-cyan-400 hover:text-white"
-        }`}
-      >
-        {isFullscreen ? (
-          <Minimize2 className={`w-4 h-4 shrink-0 ${isLight ? "text-amber-600" : "text-cyan-400"}`} />
-        ) : (
-          <Maximize2 className={`w-4 h-4 shrink-0 ${isLight ? "text-slate-700" : "text-white"}`} />
-        )}
-      </button>
+        onClick={(e) => {
+          e.stopPropagation();
+          soundFx.play("click");
+          onToggleFullscreen();
+        }}
+      />
     </div>
   );
 };

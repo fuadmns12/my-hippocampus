@@ -77,6 +77,7 @@ export const MindMapCanvas: React.FC<MindMapCanvasProps> = ({
     theme,
     connectorStyle,
     nodeShape,
+    isFullscreen,
     onUpdateNodeOffset,
     onUpdateNodeScale,
     onResetNodeOffsets,
@@ -107,7 +108,7 @@ export const MindMapCanvas: React.FC<MindMapCanvasProps> = ({
         isLightMode ? "bg-slate-50 border-slate-300" : palette.canvasBg
       }`}
       style={{
-        touchAction: 'pan-y pan-x', // Allow scroll dengan 1 jari, prevent zoom pinch
+        touchAction: 'pan-y pan-x', // Izinkan scroll halaman 1 jari (vertikal) & cegah pinch-zoom browser
       }}
       onMouseDown={viewportState.handleMouseDown}
       id="canvas-container"

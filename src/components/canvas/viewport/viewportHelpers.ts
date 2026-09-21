@@ -208,3 +208,55 @@ export function calculatePinchZoom(
 
   return { zoom: nextZoom, pan: { x: newPanX, y: newPanY } };
 }
+
+/**
+ * Ambang gerakan minimum (px) sebelum arah gestur 1 jari di area kanvas diputuskan.
+ *
+ * Nilainya sengaja sedikit lebih besar dari ambang sentuh (*touch slop*) browser (~8px)
+ * supaya browser tidak sempat memulai scroll-nya sendiri ketika gestur ternyata
+ * dimaksudkan untuk menggeser (pan) kanvas. Di bawah ambang ini sentuhan dibiarkan
+ * "belum ditentukan" sehingga tap tetap responsif.
+ */
+export const TOUCH_GESTURE_DECISION_THRESHOLD_PX = 12;
+
+/**
+ * Rasio bias vertikal: gerakan vertikal harus lebih besar dari gerakan horizontal
+ * agar gestur dianggap berniat SCROLL HALAMAN (bukan pan kanvas).
+ */
+export const TOUCH_VERTICAL_SCROLL_BIAS = 1.2;
+
+export type SingleFingerGestureIntent =
+  | "undecided"
+  | "scroll-page"
+  | "pan-canvas";
+
+/**
+ * Menentukan niat gestur SATU JARI yang dimulai dari area kosong kanvas.
+ *
+ * Masalah yang diselesaikan: handler `touchmove` milik kanvas memanggil `preventDefault()`,
+ * sehingga scroll halaman dengan satu jari tidak pernah berjalan (terutama di HP).
+ * Dengan fungsi ini gestur vertikal diserahkan kembali ke browser (scroll halaman),
+ * sedangkan gestur horizontal tetap dipakai untuk menggeser (pan) kanvas.
+ *
+ * @param deltaX Selisih client X dari titik sentuh awal (px).
+ * @param deltaY Selisih client Y dari titik sentuh awal (px).
+ * @param preferPageScroll `false` saat Mode Kanvas Fokus (layar penuh) agar 1 jari bebas pan.
+ */
+export function resolveSingleFingerGestureIntent(
+  deltaX: number,
+  deltaY: number,
+  preferPageScroll: boolean
+): SingleFingerGestureIntent {
+  // Mode kanvas fokus / layar penuh: halaman tidak perlu di-scroll, 1 jari bebas menggeser kanvas
+  if (!preferPageScroll) return "pan-canvas";
+
+  // Gerakan masih terlalu kecil: belum bisa dipastikan (bisa jadi hanya sebuah tap)
+  if (Math.hypot(deltaX, deltaY) < TOUCH_GESTURE_DECISION_THRESHOLD_PX) {
+    return "undecided";
+  }
+
+  const isVerticalDominant =
+    Math.abs(deltaY) > Math.abs(deltaX) * TOUCH_VERTICAL_SCROLL_BIAS;
+
+  return isVerticalDominant ? "scroll-page" : "pan-canvas";
+}

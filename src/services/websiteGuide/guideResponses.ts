@@ -111,6 +111,7 @@ Aplikasi ini dilengkapi pemutar musik terintegrasi untuk menemani Anda saat foku
 export const CANVAS_NAVIGATION_REPLY = `### 🔍 Navigasi & Interaksi pada Kanvas:
 
 - **Geser Kanvas (Pan)**: Klik dan tahan area kosong pada kanvas, lalu geser mouse ke arah yang diinginkan.
+- **Scroll Halaman di Layar Sentuh (HP/Tablet)**: Geser **satu jari secara vertikal** di area kanvas untuk men-scroll halaman, geser **horizontal** untuk menggeser (pan) kanvas, dan gunakan **dua jari** untuk menggeser sekaligus zoom kanvas. Pada Mode Kanvas Fokus (layar penuh), satu jari bebas menggeser kanvas ke segala arah.
 - **Perbesar / Perkecil (Zoom)**: Putar roda mouse (*scroll wheel*) atau gunakan tombol kontrol zoom di pojok kanvas.
 - **Pindahkan Kartu (Drag & Drop)**: Klik dan tahan kartu apa saja untuk memindahkan posisinya secara bebas.
 - **Lipat / Sembunyikan Cabang (Collapse)**: Klik tombol lingkaran kecil bergaris minus **(-)** pada cabang untuk melipat sub-cabangnya. Klik tanda plus **(+)** untuk membukanya kembali.

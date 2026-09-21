@@ -221,8 +221,7 @@ html.light #btn-export-dropdown .wx-face,
 html.light #btn-open-guide .wx-face,
 html.light #btn-open-upload .wx-face,
 html.light #btn-open-history .wx-face,
-html.light #btn-open-settings .wx-face,
-html.light #btn-fullscreen-page .wx-face {
+html.light #btn-open-settings .wx-face {
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 18%, #f1f5f9 50%, #f8fafc 82%, #ffffff 100%) !important;
   border-color: #cbd5e1 !important;
   box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08), inset 0 1px 0 #ffffff !important;
@@ -236,8 +235,7 @@ html.light #btn-export-dropdown .wx-text-main,
 html.light #btn-open-guide .wx-text-main,
 html.light #btn-open-upload .wx-text-main,
 html.light #btn-open-history .wx-text-main,
-html.light #btn-open-settings .wx-text-main,
-html.light #btn-fullscreen-page .wx-text-main {
+html.light #btn-open-settings .wx-text-main {
   color: #0f172a !important;
   filter: none !important;
 }
@@ -250,8 +248,7 @@ html.light #btn-export-dropdown svg,
 html.light #btn-open-guide svg,
 html.light #btn-open-upload svg,
 html.light #btn-open-history svg,
-html.light #btn-open-settings svg,
-html.light #btn-fullscreen-page svg {
+html.light #btn-open-settings svg {
   color: #0891b2 !important;
 }
 

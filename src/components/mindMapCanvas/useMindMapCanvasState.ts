@@ -22,6 +22,11 @@ export interface UseMindMapCanvasStateParams {
   svgRef: React.RefObject<SVGSVGElement | null>;
   containerRef: React.RefObject<HTMLDivElement | null>;
   gRef: React.RefObject<SVGGElement | null>;
+  /**
+   * Mode Kanvas Fokus (layar penuh) aktif → 1 jari bebas menggeser kanvas ke segala arah.
+   * Saat kanvas tertanam di halaman, geser 1 jari vertikal dipakai untuk scroll halaman.
+   */
+  isFullscreen?: boolean;
 }
 
 export function useMindMapCanvasState({
@@ -39,6 +44,7 @@ export function useMindMapCanvasState({
   svgRef,
   containerRef,
   gRef,
+  isFullscreen = false,
 }: UseMindMapCanvasStateParams) {
   const palette: ThemePalette = THEME_PALETTES[theme] || THEME_PALETTES.pastel;
 
@@ -66,6 +72,7 @@ export function useMindMapCanvasState({
     onResetNodeOffsets,
     nodes: searchState.nodes,
     onReparentNode,
+    preferPageScrollOnSingleFingerTouch: !isFullscreen,
   });
 
   // Interactive multi-anchor connection & reparenting by dragging

@@ -5,6 +5,8 @@ import { PresetSelectorDropdown } from "./PresetSelectorDropdown";
 import { HeaderSaveButton } from "./HeaderSaveButton";
 import { HeaderExportDropdown } from "./HeaderExportDropdown";
 import { MechanicalButton } from "../common/MechanicalButton";
+import { IconActionButton } from "../common/IconActionButton";
+import { soundFx } from "../../utils/soundEffects";
 
 export interface HeaderRightControlsProps {
   mindMapData: MindMapData | null;
@@ -163,58 +165,45 @@ export const HeaderRightControls: React.FC<HeaderRightControlsProps> = ({
         SETTINGS
       </MechanicalButton>
 
-      {/* Tombol Panduan Penggunaan Website */}
-      <MechanicalButton
+      {/* Tombol Panduan Penggunaan Website (ikon-only dengan gaya kontrol kanvas) */}
+      <IconActionButton
         id="btn-open-user-guide"
-        type="button"
-        size="xs"
-        variant="cyan"
-        active={isGuideOpen}
+        isActive={isGuideOpen}
+        icon={HelpCircle}
+        title="Panduan & Cara Menggunakan Website Ini"
+        className="shrink-0"
         onClick={() => {
           setShowPresetMenu(false);
           setShowExportMenu(false);
+          soundFx.play("click");
           onOpenGuide();
         }}
-        title="Panduan & Cara Menggunakan Website Ini"
-        icon={
-          <HelpCircle
-            className={`w-3.5 h-3.5 ${
-              isGuideOpen ? "text-cyan-400" : "text-white"
-            }`}
-          />
-        }
-      >
-        PANDUAN
-      </MechanicalButton>
+      />
 
-      {/* Tombol Fullscreen SELURUH HALAMAN (Page Fullscreen, bukan mode kanvas fokus) */}
+      {/* Tombol Fullscreen SELURUH HALAMAN (ikon-only dengan gaya kontrol kanvas) */}
       {onToggleFullscreenPage && (
-        <MechanicalButton
+        <IconActionButton
           id="btn-fullscreen-page"
-          type="button"
-          size="xs"
-          variant="cyan"
-          active={isPageFullscreen}
-          onClick={() => {
-            setShowPresetMenu(false);
-            setShowExportMenu(false);
-            onToggleFullscreenPage();
-          }}
+          isActive={isPageFullscreen}
+          icon={isPageFullscreen ? Minimize2 : Maximize2}
           title={
             isPageFullscreen
               ? "Keluar dari Layar Penuh Seluruh Halaman (ESC)"
               : "Layar Penuh Seluruh Halaman (semua panel tetap tampil)"
           }
-          icon={
-            isPageFullscreen ? (
-              <Minimize2 className="w-3.5 h-3.5 text-cyan-400" />
-            ) : (
-              <Maximize2 className="w-3.5 h-3.5 text-white" />
-            )
+          ariaLabel={
+            isPageFullscreen
+              ? "Keluar dari Layar Penuh Seluruh Halaman (ESC)"
+              : "Layar Penuh Seluruh Halaman"
           }
-        >
-          FULLSCREEN
-        </MechanicalButton>
+          className="shrink-0"
+          onClick={() => {
+            setShowPresetMenu(false);
+            setShowExportMenu(false);
+            soundFx.play("click");
+            onToggleFullscreenPage();
+          }}
+        />
       )}
     </div>
   );

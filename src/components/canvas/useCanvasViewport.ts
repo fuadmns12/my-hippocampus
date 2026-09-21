@@ -24,6 +24,7 @@ export function useCanvasViewport({
   onResetNodeOffsets,
   nodes,
   onReparentNode,
+  preferPageScrollOnSingleFingerTouch = true,
 }: UseCanvasViewportParams) {
   // Viewport Pan & Zoom state
   const [zoom, setZoom] = useState(0.85);
@@ -120,6 +121,7 @@ export function useCanvasViewport({
     setDropTargetCandidate,
     onUpdateNodeOffset,
     onUpdateNodeScale,
+    preferPageScrollOnSingleFingerTouch,
   });
 
   return {

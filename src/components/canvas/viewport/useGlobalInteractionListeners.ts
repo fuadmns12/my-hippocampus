@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { PositionedNode } from "../../../utils/layout/types";
 import { InteractionState } from "./types";
-import { calculatePinchZoom } from "./viewportHelpers";
+import {
+  calculatePinchZoom,
+  resolveSingleFingerGestureIntent,
+} from "./viewportHelpers";
 import { findDropTargetCandidate } from "./dropTargetHelper";
 
 export interface UseGlobalInteractionListenersParams {
@@ -22,6 +25,11 @@ export interface UseGlobalInteractionListenersParams {
   setDropTargetCandidate: (node: PositionedNode | null) => void;
   onUpdateNodeOffset: (nodeId: string, xOffset: number, yOffset: number) => void;
   onUpdateNodeScale?: (nodeId: string, scale: number) => void;
+  /**
+   * `true` = geser 1 jari secara VERTIKAL di area kanvas dipakai untuk SCROLL HALAMAN
+   * (bukan pan kanvas). `false` saat Mode Kanvas Fokus (layar penuh) agar 1 jari bebas pan.
+   */
+  preferPageScrollOnSingleFingerTouch: boolean;
 }
 
 export function useGlobalInteractionListeners({
@@ -40,6 +48,7 @@ export function useGlobalInteractionListeners({
   setDropTargetCandidate,
   onUpdateNodeOffset,
   onUpdateNodeScale,
+  preferPageScrollOnSingleFingerTouch,
 }: UseGlobalInteractionListenersParams) {
   useEffect(() => {
     let rafId: number | null = null;
@@ -166,7 +175,39 @@ export function useGlobalInteractionListeners({
           setZoom(transform.zoom);
           setPan(transform.pan);
         }
-      } else if ((mode === "pan" || mode === "drag-node") && e.touches.length === 1) {
+      } else if (mode === "pan" && e.touches.length === 1) {
+        const touch = e.touches[0];
+
+        // Sekali per gestur: putuskan apakah 1 jari dipakai untuk SCROLL HALAMAN atau PAN KANVAS.
+        // Selama belum diputuskan, preventDefault tidak dipanggil agar browser masih bisa scroll.
+        if (!interactionRef.current.touchAxisDecided) {
+          const intent = resolveSingleFingerGestureIntent(
+            touch.clientX - interactionRef.current.touchStartClientPos.x,
+            touch.clientY - interactionRef.current.touchStartClientPos.y,
+            preferPageScrollOnSingleFingerTouch
+          );
+
+          if (intent === "undecided") return;
+
+          interactionRef.current.touchAxisDecided = true;
+
+          if (intent === "scroll-page") {
+            // Serahkan gestur ke browser: scroll halaman berjalan, pan kanvas dibatalkan
+            interactionRef.current.mode = "none";
+            setIsPanning(false);
+            return;
+          }
+        }
+
+        if (e.cancelable) e.preventDefault();
+        latestClientX = touch.clientX;
+        latestClientY = touch.clientY;
+        if (!isScheduled) {
+          isScheduled = true;
+          rafId = requestAnimationFrame(processMove);
+        }
+      } else if (mode === "drag-node" && e.touches.length === 1) {
+        // Kartu/node tetap memakai gestur 1 jari penuh untuk dipindahkan
         if (e.cancelable) e.preventDefault();
         latestClientX = e.touches[0].clientX;
         latestClientY = e.touches[0].clientY;
@@ -232,6 +273,7 @@ export function useGlobalInteractionListeners({
     setDropTargetCandidate,
     onUpdateNodeOffset,
     onUpdateNodeScale,
+    preferPageScrollOnSingleFingerTouch,
     svgRef,
   ]);
 }

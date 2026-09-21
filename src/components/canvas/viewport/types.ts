@@ -16,6 +16,12 @@ export interface UseCanvasViewportParams {
   onResetNodeOffsets?: () => void;
   nodes?: PositionedNode[];
   onReparentNode?: (nodeId: string, newParentId: string) => void;
+  /**
+   * Prioritaskan SCROLL HALAMAN saat pengguna menggeser 1 jari secara vertikal di area kanvas.
+   * `true` (default) untuk kanvas yang tertanam di halaman; `false` saat Mode Kanvas Fokus
+   * (layar penuh) agar 1 jari bebas menggeser kanvas ke segala arah.
+   */
+  preferPageScrollOnSingleFingerTouch?: boolean;
 }
 
 export type InteractionMode =
@@ -46,6 +52,10 @@ export interface InteractionState {
   pinchStartPan: { x: number; y: number };
   pinchStartMidpoint: { x: number; y: number };
   lastDragEndTime: number;
+  /** Posisi sentuh awal (client px) gestur 1 jari di kanvas, untuk mendeteksi niat scroll/pan. */
+  touchStartClientPos: { x: number; y: number };
+  /** `true` bila arah gestur 1 jari sudah diputuskan (scroll halaman vs pan kanvas). */
+  touchAxisDecided: boolean;
 }
 
 export function createInitialInteractionState(): InteractionState {
@@ -68,5 +78,7 @@ export function createInitialInteractionState(): InteractionState {
     pinchStartPan: { x: 0, y: 0 },
     pinchStartMidpoint: { x: 0, y: 0 },
     lastDragEndTime: 0,
+    touchStartClientPos: { x: 0, y: 0 },
+    touchAxisDecided: false,
   };
 }
