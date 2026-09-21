@@ -1,0 +1,23 @@
+import { GuideItem } from "./types";
+import { GUIDE_CATEGORIES } from "./categories";
+import {
+  QUICKSTART_GUIDE_ITEMS,
+  INPUT_GUIDE_ITEMS,
+  NODES_GUIDE_ITEMS,
+  CANVAS_GUIDE_ITEMS,
+  THEMES_GUIDE_ITEMS,
+  STORAGE_GUIDE_ITEMS,
+  SHORTCUTS_GUIDE_ITEMS,
+} from "./items";
+
+export { GUIDE_CATEGORIES } from "./categories";
+
+export const GUIDE_ITEMS: GuideItem[] = [
+  ...QUICKSTART_GUIDE_ITEMS,
+  ...INPUT_GUIDE_ITEMS,
+  ...NODES_GUIDE_ITEMS,
+  ...CANVAS_GUIDE_ITEMS,
+  ...THEMES_GUIDE_ITEMS,
+  ...STORAGE_GUIDE_ITEMS,
+  ...SHORTCUTS_GUIDE_ITEMS,
+];

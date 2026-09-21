@@ -1,0 +1,58 @@
+/* ==========================================================================
+   Cyber Arrow Decoration in Header for Mobile Landscape Screen
+   ========================================================================== */
+.bg-cyber-arrow {
+  display: none;
+  position: relative;
+  align-self: stretch;
+  height: 100% !important;
+  flex-shrink: 0;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Tampilkan di layar HP mode landscape dengan tinggi penuh sampai ke border bawah */
+.mobile-landscape-active .bg-cyber-arrow,
+@media (max-width: 950px) and (orientation: landscape),
+@media (max-height: 500px) and (orientation: landscape) {
+  .bg-cyber-arrow {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    align-self: stretch !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+.bg-cyber-left-arrow {
+  width: 26px !important;
+  min-width: 26px !important;
+  height: 100% !important;
+  position: relative;
+  margin-right: -0.25rem !important;
+  background-color: rgba(6, 182, 212, 0.05);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 56' fill='none'%3E%3Cline x1='2' y1='0' x2='2' y2='56' stroke='%2306b6d4' stroke-width='1.5' stroke-opacity='0.6' /%3E%3Crect x='0' y='0' width='4' height='6' fill='%2300f0ff' /%3E%3Crect x='0' y='50' width='4' height='6' fill='%2300f0ff' /%3E%3Cpath d='M17 19L9 28L17 37' stroke='%2300f0ff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' /%3E%3Cpath d='M23 22L16 28L23 34' stroke='%2306b6d4' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' stroke-opacity='0.7' /%3E%3Ccircle cx='4.5' cy='28' r='1.5' fill='%2322d3ee' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center left;
+  background-size: contain;
+  filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.6));
+}
+
+@keyframes cyberArrowGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(0, 240, 255, 0.45));
+    opacity: 0.85;
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.95));
+    opacity: 1;
+  }
+}
+
+.mobile-landscape-active .bg-cyber-left-arrow {
+  height: 56px !important;
+  animation: cyberArrowGlow 2.5s ease-in-out infinite;
+}

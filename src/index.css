@@ -1,0 +1,1561 @@
+@import "tailwindcss";
+@import "./styles/mechanicalButton.css";
+@import "./styles/mobileLandscape.css";
+@import "./styles/mobileCyberArrow.css";
+
+html, body {
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+  min-height: 100%;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: contain;
+}
+
+/* Prevent iOS Safari from forcing auto-zoom on input focus when font-size < 16px */
+@media screen and (max-width: 768px) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+:root {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code, kbd, samp, pre, .font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+/* Thin Cyan Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #06b6d4 #000000;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #06b6d4;
+  border-radius: 9999px;
+  box-shadow: 0 0 4px rgba(6, 182, 212, 0.4);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #22d3ee;
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.7);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #0891b2;
+}
+
+::-webkit-scrollbar-corner {
+  background: #000000;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes flowDash {
+  from {
+    stroke-dashoffset: 28;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-flow-dash {
+  animation: flowDash 1s linear infinite;
+}
+
+/* ==========================================================================
+   LIGHT MODE THEME SYSTEM (Mode Terang Website)
+   Focused on clean white card backgrounds (#ffffff) and crisp black text (#0f172a)
+   Canvas nodes and mind map theme colors are strictly preserved.
+   ========================================================================== */
+
+html.light, [data-theme="light"] {
+  --color-scheme: light;
+}
+
+html.light body,
+html.light #app-root,
+html.light #mobile-landscape-outer-wrapper,
+html.light .mobile-landscape-viewport {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html.light #btn-header-collapse {
+  background-color: #ffffff !important;
+  color: #0891b2 !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 14px rgba(8, 145, 178, 0.15) !important;
+}
+
+html.light #btn-header-collapse:hover {
+  background-color: #f0fdfa !important;
+  color: #06b6d4 !important;
+  border-color: #0891b2 !important;
+}
+
+/* Light Mode Scrollbars */
+html.light * {
+  scrollbar-color: #0891b2 #e2e8f0;
+}
+
+html.light ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: #0891b2;
+  border-radius: 9999px;
+  box-shadow: 0 0 4px rgba(8, 145, 178, 0.3);
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #06b6d4;
+}
+
+html.light ::-webkit-scrollbar-corner {
+  background: #f1f5f9;
+}
+
+/* ==========================================================================
+   1. HEADER & TOP BAR IN LIGHT MODE
+   ========================================================================== */
+html.light header {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border-bottom-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light header h1,
+html.light header h2,
+html.light header p,
+html.light header .text-white {
+  color: #0f172a !important;
+}
+
+html.light header .text-neutral-400,
+html.light header .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light .header-inner-bar {
+  background-color: transparent !important;
+}
+
+/* Header Dropdowns (Presets, Exports & Root Switcher) */
+html.light #preset-selector-dropdown,
+html.light #header-export-dropdown,
+html.light #header-root-switcher-dropdown,
+html.light [id$="-dropdown-menu"],
+html.light [id$="-dropdown-panel"] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+}
+
+html.light #preset-selector-dropdown .bg-black,
+html.light #header-export-dropdown .bg-black,
+html.light #header-root-switcher-dropdown .bg-black {
+  background-color: #ffffff !important;
+}
+
+html.light #preset-selector-dropdown .text-white,
+html.light #header-export-dropdown .text-white,
+html.light #header-root-switcher-dropdown .text-white {
+  color: #0f172a !important;
+}
+
+html.light #preset-selector-dropdown button:hover,
+html.light #header-export-dropdown button:hover,
+html.light #header-root-switcher-dropdown button:hover {
+  background-color: #f1f5f9 !important;
+  color: #0891b2 !important;
+}
+
+html.light #header-root-switcher-dropdown .border-neutral-800 {
+  border-bottom-color: #e2e8f0 !important;
+}
+
+html.light #header-root-switcher-dropdown button.border-cyan-500\/50 {
+  background-color: #f0fdfa !important;
+  border-color: #0891b2 !important;
+  color: #0891b2 !important;
+}
+
+/* Specific Header Mechanical Buttons in Light Mode */
+html.light #header-new-mindmap-btn .wx-face,
+html.light #header-toggle-input-layout-btn .wx-face,
+html.light #btn-save-mindmap .wx-face,
+html.light #btn-preset-selector .wx-face,
+html.light #btn-export-dropdown .wx-face,
+html.light #btn-open-guide .wx-face,
+html.light #btn-open-upload .wx-face,
+html.light #btn-open-history .wx-face,
+html.light #btn-open-settings .wx-face {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 18%, #f1f5f9 50%, #f8fafc 82%, #ffffff 100%) !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08), inset 0 1px 0 #ffffff !important;
+}
+
+html.light #header-new-mindmap-btn .wx-text-main,
+html.light #header-toggle-input-layout-btn .wx-text-main,
+html.light #btn-save-mindmap .wx-text-main,
+html.light #btn-preset-selector .wx-text-main,
+html.light #btn-export-dropdown .wx-text-main,
+html.light #btn-open-guide .wx-text-main,
+html.light #btn-open-upload .wx-text-main,
+html.light #btn-open-history .wx-text-main,
+html.light #btn-open-settings .wx-text-main {
+  color: #0f172a !important;
+  filter: none !important;
+}
+
+html.light #header-new-mindmap-btn svg,
+html.light #header-toggle-input-layout-btn svg,
+html.light #btn-save-mindmap svg,
+html.light #btn-preset-selector svg,
+html.light #btn-export-dropdown svg,
+html.light #btn-open-guide svg,
+html.light #btn-open-upload svg,
+html.light #btn-open-history svg,
+html.light #btn-open-settings svg {
+  color: #0891b2 !important;
+}
+
+
+/* ==========================================================================
+   2. INPUT PANEL CARD (#input-panel-section)
+   Card background: Pure White (#ffffff), Text: Dark/Black (#0f172a)
+   ========================================================================== */
+html.light #input-panel-section {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08) !important;
+}
+
+html.light #input-panel-section .text-white {
+  color: #0f172a !important;
+}
+
+html.light #input-panel-section .text-neutral-400,
+html.light #input-panel-section .text-neutral-500,
+html.light #input-panel-section .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light #input-panel-header {
+  background-color: #ffffff !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+
+html.light #input-panel-header:hover {
+  background-color: #f8fafc !important;
+}
+
+html.light #input-panel-header .bg-black {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* Inputs, textareas, selects inside Input Panel */
+html.light #input-panel-section input,
+html.light #input-panel-section textarea,
+html.light #input-panel-section select {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light #input-panel-section input:focus,
+html.light #input-panel-section textarea:focus {
+  border-color: #06b6d4 !important;
+  box-shadow: 0 0 0 1px #06b6d4 !important;
+}
+
+html.light #input-panel-section input::placeholder,
+html.light #input-panel-section textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Strategy Option Cards inside Input Panel */
+html.light [id^="strategy-card-"],
+html.light #input-panel-section .grid > div[onClick] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light [id^="strategy-card-"]:hover,
+html.light #input-panel-section .grid > div[onClick]:hover {
+  background-color: #f8fafc !important;
+  border-color: #06b6d4 !important;
+}
+
+html.light [id^="strategy-card-"].border-cyan-400,
+html.light #input-panel-section .grid > div[onClick].border-cyan-400 {
+  background-color: #f0fdfa !important;
+  border-color: #06b6d4 !important;
+  box-shadow: 0 0 0 1px #06b6d4, 0 4px 12px rgba(6, 182, 212, 0.1) !important;
+}
+
+html.light [id^="strategy-card-"] p,
+html.light #input-panel-section .grid > div[onClick] p {
+  color: #475569 !important;
+}
+
+html.light [id^="strategy-card-"] span,
+html.light #input-panel-section .grid > div[onClick] span {
+  color: #0f172a !important;
+}
+
+html.light [id^="strategy-card-"] button,
+html.light [id^="btn-settings-"] {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light [id^="strategy-card-"] button:hover,
+html.light [id^="btn-settings-"]:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #06b6d4 !important;
+  color: #0891b2 !important;
+}
+
+/* Badges, Chips & Buttons inside Input Panel */
+html.light #input-panel-section .bg-black:not(button) {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light #input-panel-section button.bg-black {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light #input-panel-section button.bg-black:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #06b6d4 !important;
+}
+
+html.light #input-panel-section .bg-neutral-950 {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+/* ==========================================================================
+   3. LAYOUT & THEME SELECTOR CARD (#layout-theme-selector)
+   Card background: Pure White (#ffffff), Text: Dark/Black (#0f172a)
+   ========================================================================== */
+html.light #layout-theme-selector {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08) !important;
+}
+
+html.light #layout-theme-selector .text-white {
+  color: #0f172a !important;
+}
+
+html.light #layout-theme-header {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+html.light #layout-theme-header:hover {
+  background-color: #f8fafc !important;
+}
+
+html.light #layout-theme-header .bg-black {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light #layout-theme-options-content {
+  background-color: #ffffff !important;
+  border-top-color: #e2e8f0 !important;
+}
+
+html.light #layout-theme-selector label,
+html.light #layout-theme-selector label span {
+  color: #0f172a !important;
+}
+
+/* CustomSelect triggers and dropdown menus */
+html.light [id$="-select"],
+html.light [id$="-select-container"] button {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light [id$="-select-container"] button:hover {
+  border-color: #06b6d4 !important;
+}
+
+html.light [id$="-select-container"] button .text-white {
+  color: #0f172a !important;
+}
+
+html.light [id$="-select-container"] [role="listbox"] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  scrollbar-color: #0891b2 #f1f5f9 !important;
+}
+
+html.light [id$="-select-container"] [role="option"] {
+  color: #0f172a !important;
+}
+
+html.light [id$="-select-container"] [role="option"]:hover {
+  background-color: #f1f5f9 !important;
+  color: #0891b2 !important;
+}
+
+html.light [id$="-select-container"] [role="option"][aria-selected="true"] {
+  background-color: #ecfeff !important;
+  border-color: #06b6d4 !important;
+  color: #0891b2 !important;
+}
+
+html.light [id$="-select-container"] [role="option"] .text-white {
+  color: #0f172a !important;
+}
+
+html.light [id$="-select-container"] [role="option"] .bg-black {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* ==========================================================================
+   4. MEMORY CARD / HISTORY DRAWER & PRESET DRAWER CARDS
+   Card background: Pure White (#ffffff), Text: Dark/Black (#0f172a)
+   ========================================================================== */
+html.light #history-drawer-panel,
+html.light #preset-drawer-panel {
+  background-color: #ffffff !important;
+  border-left-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: -10px 0 25px -5px rgba(15, 23, 42, 0.1) !important;
+}
+
+html.light #history-drawer-panel .text-white,
+html.light #preset-drawer-panel .text-white {
+  color: #0f172a !important;
+}
+
+html.light #history-drawer-panel .bg-black,
+html.light #preset-drawer-panel .bg-black {
+  background-color: #ffffff !important;
+}
+
+html.light #history-drawer-panel input,
+html.light #preset-drawer-panel input {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light #history-drawer-panel input::placeholder,
+html.light #preset-drawer-panel input::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* History & Preset Item Cards */
+html.light #history-drawer-panel .group[onClick],
+html.light #history-drawer-panel .rounded-2xl.border,
+html.light #preset-drawer-panel button.rounded-xl.border {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light #history-drawer-panel .group[onClick]:hover,
+html.light #history-drawer-panel .rounded-2xl.border:hover,
+html.light #preset-drawer-panel button.rounded-xl.border:hover {
+  background-color: #f8fafc !important;
+  border-color: #06b6d4 !important;
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.1) !important;
+}
+
+html.light #history-drawer-panel .group[onClick] h3,
+html.light #preset-drawer-panel button.rounded-xl.border span.font-semibold {
+  color: #0f172a !important;
+}
+
+html.light #history-drawer-panel .group[onClick] p,
+html.light #preset-drawer-panel button.rounded-xl.border span.text-white {
+  color: #64748b !important;
+}
+
+html.light #history-drawer-panel .group[onClick] span.bg-black,
+html.light #preset-drawer-panel button.rounded-xl.border span.bg-black,
+html.light #preset-drawer-panel span.bg-black {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light #preset-drawer-panel .border-cyan-500\/30,
+html.light #preset-drawer-panel .border-cyan-500\/40,
+html.light #preset-drawer-panel .border-cyan-500\/20 {
+  border-color: #e2e8f0 !important;
+}
+
+html.light #btn-close-preset-drawer {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light #btn-close-preset-drawer:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #06b6d4 !important;
+  color: #0891b2 !important;
+}
+
+/* ==========================================================================
+   5. MODALS & POPUPS
+   Card background: Pure White (#ffffff), Text: Dark/Black (#0f172a)
+   ========================================================================== */
+html.light #settings-modal-overlay,
+html.light #user-guide-modal-overlay,
+html.light #history-modal-overlay,
+html.light #export-modal-overlay,
+html.light #upload-modal-overlay,
+html.light #confirm-offline-modal-overlay,
+html.light [id$="-modal-overlay"] {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+html.light #settings-modal,
+html.light #user-guide-modal,
+html.light #history-modal,
+html.light #export-modal,
+html.light #upload-modal,
+html.light #confirm-offline-modal,
+html.light #node-editor-modal,
+html.light #node-notes-modal,
+html.light #grouping-settings-modal,
+html.light #outline-modal,
+html.light #confirm-delete-modal-card,
+html.light [id$="-modal"],
+html.light [id$="-modal-card"] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25) !important;
+}
+
+html.light [id$="-modal"] > div:first-child,
+html.light [id$="-modal-card"] > div:first-child,
+html.light #settings-modal > div:first-child,
+html.light #user-guide-modal > div:first-child,
+html.light #node-editor-modal > div:first-child,
+html.light #node-notes-modal > div:first-child,
+html.light #grouping-settings-modal > div:first-child,
+html.light #upload-modal > div:first-child {
+  background-color: #f8fafc !important;
+  border-bottom-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light [id$="-modal"] .text-white,
+html.light [id$="-modal-card"] .text-white {
+  color: #0f172a !important;
+}
+
+html.light [id$="-modal"] .text-neutral-300,
+html.light [id$="-modal"] .text-neutral-400,
+html.light [id$="-modal-card"] .text-neutral-300,
+html.light [id$="-modal-card"] .text-neutral-400 {
+  color: #475569 !important;
+}
+
+html.light [id$="-modal"] .bg-black,
+html.light [id$="-modal-card"] .bg-black {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light [id$="-modal"] .bg-neutral-900,
+html.light [id$="-modal"] .bg-neutral-800,
+html.light [id$="-modal-card"] .bg-neutral-900,
+html.light [id$="-modal-card"] .bg-neutral-800 {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light [id$="-modal"] input,
+html.light [id$="-modal"] textarea,
+html.light [id$="-modal"] select,
+html.light [id$="-modal-card"] input,
+html.light [id$="-modal-card"] textarea {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light [id$="-modal"] input::placeholder,
+html.light [id$="-modal"] textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.light [id$="-modal"] pre {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* ==========================================================================
+   6. FLOATING PANELS & WIDGETS
+   ========================================================================== */
+html.light #floating-music-player,
+html.light #ai-assistant-chat-window {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15) !important;
+}
+
+html.light #ai-assistant-chat-window .bg-black {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light #ai-assistant-chat-window input {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light #pwa-update-banner {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border-color: #0284c7 !important;
+  color: #0f172a !important;
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.15) !important;
+}
+
+html.light #pwa-update-banner .text-neutral-300 {
+  color: #334155 !important;
+}
+
+html.light #pwa-update-banner .bg-black {
+  background-color: #f1f5f9 !important;
+}
+
+/* ==========================================================================
+   7. CANVAS OUTER CONTROLS (Toolbars, Spotlights & Overlays)
+   ========================================================================== */
+html.light #canvas-container {
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.1) !important;
+}
+
+html.light .canvas-toolbar-container,
+html.light #canvas-spotlight-bar,
+html.light #canvas-zoom-controls {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08) !important;
+}
+
+html.light .canvas-toolbar-container input {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+/* Empty Canvas State Container in Light Mode */
+html.light #empty-canvas-container {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08) !important;
+}
+
+html.light #empty-canvas-container .absolute.inset-0.bg-black {
+  background-color: #ffffff !important;
+  opacity: 0.9 !important;
+}
+
+html.light #empty-canvas-container .w-16.h-16,
+html.light #empty-canvas-container .w-20.h-20,
+html.light #empty-canvas-container [class*="rounded-2xl bg-black"] {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important;
+}
+
+html.light #empty-canvas-container .lucide-network {
+  color: #0891b2 !important;
+}
+
+html.light #empty-canvas-container .text-white {
+  color: #0f172a !important;
+}
+
+html.light #empty-canvas-container svg.text-white {
+  color: #0891b2 !important;
+}
+
+html.light #empty-canvas-container #btn-empty-generate,
+html.light #empty-canvas-container #btn-empty-generate-all {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #0891b2 !important;
+  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.12) !important;
+}
+
+html.light #empty-canvas-container #btn-empty-generate:hover,
+html.light #empty-canvas-container #btn-empty-generate-all:hover {
+  background-color: #f0fdfa !important;
+  border-color: #06b6d4 !important;
+  color: #0891b2 !important;
+}
+
+html.light #empty-canvas-container #btn-empty-generate-all .lucide-network {
+  color: #0891b2 !important;
+}
+
+html.light #empty-canvas-container p,
+html.light #empty-canvas-container p span {
+  color: #1e293b !important;
+}
+
+html.light #empty-canvas-container .lucide-folder-open {
+  color: #0891b2 !important;
+}
+
+html.light #empty-canvas-container .border-t {
+  border-top-color: #e2e8f0 !important;
+}
+
+html.light #empty-canvas-container [id^="btn-preset-quick-"] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05) !important;
+}
+
+html.light #empty-canvas-container [id^="btn-preset-quick-"]:hover {
+  background-color: #f8fafc !important;
+  border-color: #0891b2 !important;
+  color: #0891b2 !important;
+}
+
+html.light #empty-canvas-container [id^="btn-preset-quick-"] span {
+  color: #0f172a !important;
+}
+
+html.light #empty-canvas-container [id^="btn-preset-quick-"]:hover span {
+  color: #0891b2 !important;
+}
+
+html.light #empty-canvas-container [id^="btn-preset-quick-"] .font-mono {
+  color: #64748b !important;
+}
+
+/* ==========================================================================
+   8. CANVAS NODE & THEME PROTECTION (CRITICAL)
+   "Hati-hati dengan node canvas karena tema"
+   Ensures SVG nodes, connectors, shapes, and texts preserve their selected
+   mind map ColorTheme (fill, stroke, cardFill, labelTextColor).
+   ========================================================================== */
+html.light #canvas-container,
+[data-theme="light"] #canvas-container {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light #canvas-container svg,
+html.light #canvas-container svg *,
+html.light #mindmap-svg,
+html.light #mindmap-svg *,
+html.light .canvas-node,
+html.light .canvas-node *,
+html.light [data-node-id],
+html.light [data-node-id] *,
+html.light [id^="canvas-node-"],
+html.light [id^="canvas-node-"] * {
+  /* Prevent any global HTML UI card color/background from overriding SVG node theme */
+  color: unset;
+}
+
+/* ==========================================================================
+   8.1 CANVAS FLOATING CONTROLS IN LIGHT MODE
+   Ensure toolbar buttons, search input, zoom controls, and map switcher
+   render with clean white cards, dark text, and appropriate borders.
+   ========================================================================== */
+html.light #canvas-search-input {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light #canvas-search-input::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.light #btn-canvas-map-switcher {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light #btn-canvas-map-switcher:hover {
+  background-color: #f8fafc !important;
+  color: #0e7490 !important;
+}
+
+html.light #btn-quick-add-mindmap {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light #btn-quick-add-mindmap:hover {
+  background-color: #f8fafc !important;
+  color: #0e7490 !important;
+}
+
+html.light #btn-canvas-quick-clear {
+  background-color: #ffffff !important;
+  color: #e11d48 !important;
+  border-color: #fecdd3 !important;
+}
+
+html.light #btn-canvas-quick-clear:hover {
+  background-color: #fff1f2 !important;
+  color: #be123c !important;
+}
+
+html.light #btn-canvas-fullscreen-toggle {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+}
+
+/* ==========================================================================
+   9. WELCOME GATE SCREEN IN LIGHT MODE (#welcome-gate-screen)
+   ========================================================================== */
+html.light #welcome-gate-screen,
+[data-theme="light"] #welcome-gate-screen {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html.light #welcome-card-wrap,
+[data-theme="light"] #welcome-card-wrap {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15) !important;
+}
+
+html.light #welcome-card-wrap .bg-black,
+[data-theme="light"] #welcome-card-wrap .bg-black {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light #welcome-card-wrap h1,
+html.light #welcome-card-wrap h1 span,
+[data-theme="light"] #welcome-card-wrap h1,
+[data-theme="light"] #welcome-card-wrap h1 span {
+  color: #0f172a !important;
+}
+
+html.light #welcome-card-wrap p,
+html.light #welcome-card-wrap .text-neutral-300,
+[data-theme="light"] #welcome-card-wrap p,
+[data-theme="light"] #welcome-card-wrap .text-neutral-300 {
+  color: #475569 !important;
+}
+
+html.light #welcome-start-button .wx-face,
+[data-theme="light"] #welcome-start-button .wx-face {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 18%, #f1f5f9 50%, #f8fafc 82%, #ffffff 100%) !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08), inset 0 1px 0 #ffffff !important;
+}
+
+html.light #welcome-start-button .wx-text-main,
+html.light #welcome-start-button .wx-text-main span,
+[data-theme="light"] #welcome-start-button .wx-text-main,
+[data-theme="light"] #welcome-start-button .wx-text-main span {
+  color: #0f172a !important;
+  filter: none !important;
+}
+
+/* ==========================================================================
+   10. FLOATING YOUTUBE MUSIC PLAYER IN LIGHT MODE (#floating-youtube-music-player)
+   ========================================================================== */
+html.light #floating-youtube-music-player > div,
+[data-theme="light"] #floating-youtube-music-player > div {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.1) !important;
+}
+
+html.light #floating-youtube-music-player .text-white,
+[data-theme="light"] #floating-youtube-music-player .text-white {
+  color: #0f172a !important;
+}
+
+html.light #floating-youtube-music-player .border-b,
+html.light #floating-youtube-music-player .border-neutral-800\/80,
+[data-theme="light"] #floating-youtube-music-player .border-b {
+  border-color: #e2e8f0 !important;
+}
+
+html.light #floating-youtube-music-player button,
+[data-theme="light"] #floating-youtube-music-player button {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light #floating-youtube-music-player button:hover,
+[data-theme="light"] #floating-youtube-music-player button:hover {
+  background-color: #f1f5f9 !important;
+  color: #0891b2 !important;
+}
+
+html.light #floating-youtube-music-player button svg,
+[data-theme="light"] #floating-youtube-music-player button svg {
+  color: #0f172a !important;
+}
+
+html.light #floating-youtube-music-player button:hover svg,
+[data-theme="light"] #floating-youtube-music-player button:hover svg {
+  color: #0891b2 !important;
+}
+
+html.light #floating-youtube-music-player span.bg-black,
+[data-theme="light"] #floating-youtube-music-player span.bg-black {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #0891b2 !important;
+}
+
+html.light #floating-music-toggle-play,
+[data-theme="light"] #floating-music-toggle-play {
+  background-color: #f0fdfa !important;
+  border-color: #0891b2 !important;
+  color: #0891b2 !important;
+}
+
+html.light #floating-music-toggle-play svg,
+[data-theme="light"] #floating-music-toggle-play svg {
+  color: #0891b2 !important;
+}
+
+/* ==========================================================================
+   11. WEBSITE GUIDE BOT FAB & CHAT WINDOW IN LIGHT MODE
+   ========================================================================== */
+html.light #ga-fab-website-guide-bot,
+[data-theme="light"] #ga-fab-website-guide-bot {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15) !important;
+}
+
+html.light #ga-fab-website-guide-bot:hover,
+[data-theme="light"] #ga-fab-website-guide-bot:hover {
+  background-color: #f0fdfa !important;
+  border-color: #0891b2 !important;
+}
+
+html.light #ga-fab-website-guide-bot .text-white,
+[data-theme="light"] #ga-fab-website-guide-bot .text-white {
+  color: #0f172a !important;
+}
+
+html.light #ga-fab-website-guide-bot .bg-black,
+[data-theme="light"] #ga-fab-website-guide-bot .bg-black {
+  background-color: #ffffff !important;
+}
+
+html.light #website-guide-bot-chat-modal,
+[data-theme="light"] #website-guide-bot-chat-modal {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.2) !important;
+}
+
+html.light #website-guide-bot-chat-modal .bg-black,
+[data-theme="light"] #website-guide-bot-chat-modal .bg-black {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light #website-guide-bot-chat-modal .text-white,
+[data-theme="light"] #website-guide-bot-chat-modal .text-white {
+  color: #0f172a !important;
+}
+
+html.light #website-guide-bot-chat-modal input,
+html.light #website-guide-bot-chat-modal textarea,
+[data-theme="light"] #website-guide-bot-chat-modal input,
+[data-theme="light"] #website-guide-bot-chat-modal textarea {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+/* ==========================================================================
+   12. APP TOAST NOTIFICATION IN LIGHT MODE
+   ========================================================================== */
+html.light #app-toast-notification,
+[data-theme="light"] #app-toast-notification {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15) !important;
+}
+
+html.light #app-toast-notification .text-white,
+[data-theme="light"] #app-toast-notification .text-white {
+  color: #0f172a !important;
+}
+
+html.light #app-toast-notification .bg-black,
+[data-theme="light"] #app-toast-notification .bg-black {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* ==========================================================================
+   13. SCALED MECHANICAL ROCKER SWITCH (UIVERSE) FOR THEME CARDS
+   ========================================================================== */
+.ui-rocker-switch {
+  position: relative;
+  width: 58px;
+  height: 26px;
+  box-sizing: border-box;
+  padding: 2px;
+  background: #0d0d0d;
+  border-radius: 6px;
+  box-shadow:
+    inset 0 1px 2px 1px rgba(0, 0, 0, 0.6),
+    0 1px 0 0 rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.ui-rocker-switch input[type="checkbox"] {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  margin: 0;
+  left: 0;
+  top: 0;
+}
+
+.ui-rocker-switch input[type="checkbox"] + label {
+  position: relative;
+  display: block;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: #1b1c1c;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+.ui-rocker-switch input[type="checkbox"] + label:before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-left: 4px;
+  background: #fff;
+  border-radius: 50%;
+  vertical-align: middle;
+  box-shadow:
+    0 0 5px 2px rgba(239, 68, 68, 0.9),
+    0 0 3px 1px rgba(239, 68, 68, 0.9);
+  transition: all 0.35s ease-in-out;
+}
+
+.ui-rocker-switch input[type="checkbox"] + label:after {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.ui-rocker-switch input[type="checkbox"] + label i {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 12px;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: #0d0d0d;
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.25);
+}
+
+.ui-rocker-switch input[type="checkbox"] + label i:before,
+.ui-rocker-switch input[type="checkbox"] + label i:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 1px;
+  background: #0d0d0d;
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.25);
+}
+
+.ui-rocker-switch input[type="checkbox"] + label i:before {
+  left: -4px;
+}
+
+.ui-rocker-switch input[type="checkbox"] + label i:after {
+  left: 4px;
+}
+
+.ui-rocker-switch input[type="checkbox"]:checked + label {
+  left: 50%;
+}
+
+.ui-rocker-switch input[type="checkbox"]:checked + label:before {
+  box-shadow:
+    0 0 6px 2px rgba(6, 182, 212, 0.95),
+    0 0 3px 1px rgba(6, 182, 212, 0.95);
+}
+
+/* ==========================================================================
+   14. NEO TOGGLE BUTTON (UIVERSE BY CHICOGALE - CYAN ADAPTED)
+   ========================================================================== */
+.neo-toggle-container {
+  --toggle-width: 58px;
+  --toggle-height: 28px;
+  --toggle-bg: #09090b;
+  --toggle-off-color: #52525b;
+  --toggle-on-color: #06b6d4;
+  --toggle-on-glow: rgba(6, 182, 212, 0.5);
+  --toggle-transition: 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  user-select: none;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.neo-toggle-container.neo-toggle-sm {
+  --toggle-width: 50px;
+  --toggle-height: 24px;
+}
+
+.neo-toggle-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.neo-toggle {
+  position: relative;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+  display: block;
+  cursor: pointer;
+  transform: translateZ(0);
+  perspective: 500px;
+  margin: 0;
+}
+
+/* Track styles */
+.neo-track {
+  position: absolute;
+  inset: 0;
+  border-radius: calc(var(--toggle-height) / 2);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transform: translateZ(-1px);
+  transition: transform var(--toggle-transition);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.7),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.neo-background-layer {
+  position: absolute;
+  inset: 0;
+  background: var(--toggle-bg);
+  background-image: linear-gradient(
+    -45deg,
+    rgba(10, 10, 10, 0.9) 0%,
+    rgba(24, 24, 27, 0.5) 50%,
+    rgba(10, 10, 10, 0.9) 100%
+  );
+  opacity: 1;
+  transition: all var(--toggle-transition);
+}
+
+.neo-grid-layer {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+      to right,
+      rgba(6, 182, 212, 0.12) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.12) 1px, transparent 1px);
+  background-size: 4px 4px;
+  opacity: 0;
+  transition: opacity var(--toggle-transition);
+}
+
+.neo-track-highlight {
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(var(--toggle-height) / 2);
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0));
+  opacity: 0;
+  transition: all var(--toggle-transition);
+}
+
+/* Spectrum analyzer */
+.neo-spectrum-analyzer {
+  position: absolute;
+  bottom: 4px;
+  right: 7px;
+  height: 8px;
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  opacity: 0;
+  transition: opacity var(--toggle-transition);
+}
+
+.neo-spectrum-bar {
+  width: 1.5px;
+  height: 2px;
+  background-color: var(--toggle-on-color);
+  opacity: 0.9;
+  border-radius: 1px;
+}
+
+/* Thumb styles */
+.neo-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: calc(var(--toggle-height) - 6px);
+  height: calc(var(--toggle-height) - 6px);
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  transition: transform var(--toggle-transition);
+  z-index: 1;
+}
+
+.neo-thumb-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--toggle-off-color);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  transition: all var(--toggle-transition);
+}
+
+.neo-thumb-core {
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), transparent);
+  transition: all var(--toggle-transition);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.neo-thumb-icon {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  transition: all var(--toggle-transition);
+}
+
+.neo-thumb-wave {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 1.5px;
+  background: #a1a1aa;
+  transform: translate(-50%, -50%);
+  transition: all var(--toggle-transition);
+  border-radius: 1px;
+}
+
+.neo-thumb-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--toggle-off-color);
+  transform: scale(0);
+  opacity: 0;
+  transition: all var(--toggle-transition);
+}
+
+/* Gesture area */
+.neo-gesture-area {
+  position: absolute;
+  inset: -6px;
+  z-index: 0;
+}
+
+/* Interaction feedback */
+.neo-interaction-feedback {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.neo-ripple {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--toggle-on-color) 0%,
+    transparent 70%
+  );
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.4s ease-out;
+}
+
+.neo-progress-arc {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--toggle-on-color);
+  transform: translate(-50%, -50%) scale(0) rotate(0deg);
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    transform 0.5s ease;
+}
+
+/* Status indicator (optional) */
+.neo-status {
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.neo-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.neo-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--toggle-off-color);
+  transition: all var(--toggle-transition);
+}
+
+.neo-status-text {
+  font-size: 8px;
+  font-weight: 700;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: var(--toggle-off-color);
+  letter-spacing: 0.5px;
+  transition: all var(--toggle-transition);
+}
+
+/* Active states (ON) */
+.neo-toggle-input:checked + .neo-toggle .neo-thumb {
+  transform: translateX(calc(var(--toggle-width) - var(--toggle-height)));
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-thumb-ring {
+  background-color: var(--toggle-on-color);
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 0 12px var(--toggle-on-glow);
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-thumb-wave {
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid #ffffff;
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-thumb-pulse {
+  transform: scale(1.2);
+  opacity: 0.35;
+  animation: neo-pulse 1.5s infinite;
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-track-highlight {
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.25));
+  opacity: 1;
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-grid-layer {
+  opacity: 1;
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-spectrum-analyzer {
+  opacity: 1;
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(1) {
+  animation: neo-spectrum 0.9s infinite;
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(2) {
+  animation: neo-spectrum 0.8s 0.1s infinite;
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(3) {
+  animation: neo-spectrum 1.1s 0.2s infinite;
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(4) {
+  animation: neo-spectrum 0.7s 0.1s infinite;
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-spectrum-bar:nth-child(5) {
+  animation: neo-spectrum 0.9s 0.15s infinite;
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-status-dot {
+  background-color: var(--toggle-on-color);
+  box-shadow: 0 0 6px var(--toggle-on-color);
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-status-text {
+  color: var(--toggle-on-color);
+}
+
+.neo-toggle-input:checked + .neo-toggle .neo-status-text::before {
+  content: "ACTIVE";
+}
+
+.neo-toggle-input:not(:checked) + .neo-toggle .neo-status-text::before {
+  content: "STANDBY";
+}
+
+/* Hover effects */
+.neo-toggle:hover .neo-thumb-ring {
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes neo-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}
+
+@keyframes neo-spectrum {
+  0% {
+    height: 2px;
+  }
+  50% {
+    height: 7px;
+  }
+  100% {
+    height: 2px;
+  }
+}
+
+
+
+
+
+
+

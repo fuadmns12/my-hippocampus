@@ -1,0 +1,111 @@
+import React from "react";
+import {
+  SlidersHorizontal,
+  SortAsc,
+  PieChart,
+  LayoutGrid,
+  Plus,
+  PlusCircle,
+  Network,
+} from "lucide-react";
+import { GuideItem } from "../types";
+
+export const INPUT_GUIDE_ITEMS: GuideItem[] = [
+  {
+    id: "input-root-topic",
+    category: "input",
+    title: "Kotak 'Topik Utama' & Pilihan Emoji",
+    badge: "Formulir Kiri",
+    icon: <SlidersHorizontal className="w-4 h-4 text-white" />,
+    summary: "Menentukan ide utama dan simbol pengenal di tengah diagram peta pikiran Anda.",
+    steps: [
+      "Ketik ide atau tema utama Anda pada kolom 'Topik Utama' (misal: 'Liburan Akhir Tahun' atau 'Struktur Kepanitiaan').",
+      "Pilih salah satu emoji cepat yang ada di bawah kotak untuk mempercantik kotak utama.",
+      "Gunakan tombol 'Hapus Emoji' jika Anda lebih menyukai tampilan sederhana tanpa gambar simbol.",
+    ],
+  },
+  {
+    id: "strat-alphabetical",
+    category: "input",
+    title: "Pengelompokan: Urut Abjad (A-Z)",
+    badge: "Pola Cabang",
+    icon: <SortAsc className="w-4 h-4 text-white" />,
+    summary: "Mengelompokkan daftar nama secara otomatis berdasarkan huruf depan (A, B, C...).",
+    steps: [
+      "Pilih kartu susunan 'Alphabetical'.",
+      "Aplikasi akan membagi nama-nama Anda ke dalam cabang huruf (misal: Kelompok A, Kelompok B, Kelompok C).",
+      "Klik ikon roda gigi kecil untuk memilih mode abjad satu per satu (A, B, C...) atau rentang gabungan (A-E, F-J...).",
+    ],
+    tips: "Pilihan ini sangat cocok untuk daftar peserta, kamus istilah, daftar nomor kontak, atau daftar barang inventaris.",
+  },
+  {
+    id: "strat-balanced-spokes",
+    category: "input",
+    title: "Pengelompokan: Bagi Rata ke Cabang (Seimbang)",
+    badge: "Pola Cabang",
+    icon: <PieChart className="w-4 h-4 text-white" />,
+    summary: "Membagi seluruh daftar ide secara merata ke beberapa cabang utama agar diagram tampak seimbang.",
+    steps: [
+      "Pilih kartu susunan 'Balanced Spokes'.",
+      "Klik tombol roda gigi untuk menentukan jumlah cabang yang diinginkan (misal: dibagi ke 3, 4, atau 6 cabang).",
+      "Anda bisa mengganti nama setiap cabang (misal: 'Kelompok 1', 'Kelompok 2', atau 'Tahap Awal', 'Tahap Akhir').",
+      "Aplikasi akan menyebarkan nama secara adil ke tiap cabang sehingga gambar tampak rapi dan membulat seimbang.",
+    ],
+    tips: "Sangat pas untuk pembagian kelompok belajar, rencana bertahap, atau pilar-pilar rencana kerja.",
+  },
+  {
+    id: "strat-flat-direct",
+    category: "input",
+    title: "Pengelompokan: Cabang Langsung (Semua Menempel ke Pusat)",
+    badge: "Pola Cabang",
+    icon: <LayoutGrid className="w-4 h-4 text-white" />,
+    summary: "Menghubungkan setiap ide langsung ke lingkaran topik utama tanpa sub-kelompok perantara.",
+    steps: [
+      "Pilih kartu susunan 'Flat Direct'.",
+      "Semua nama atau ide yang Anda ketik akan langsung menjadi ranting yang menempel ke topik utama.",
+    ],
+    tips: "Paling cocok untuk curah pendapat (brainstorming) cepat atau daftar ide ringkas di bawah 15 poin.",
+  },
+  {
+    id: "input-names-list",
+    category: "input",
+    title: "Kotak Daftar Nama Anggota / Ide Cabang",
+    badge: "Formulir Kiri",
+    icon: <Plus className="w-4 h-4 text-white" />,
+    summary: "Tempat mengetik atau menempelkan daftar ide yang ingin dijadikan cabang diagram.",
+    steps: [
+      "Ketik atau tempelkan (paste) daftar nama pada kotak teks; cukup pisahkan per baris (tekan Enter) atau gunakan tanda koma.",
+      "Anda juga bisa mengetik satu per satu di kolom 'Tambah Cepat' lalu tekan tombol Enter pada keyboard.",
+      "Setiap nama yang masuk akan tampil sebagai kartu nama kecil (chip).",
+      "Klik tanda silang kecil (X) pada kartu nama untuk menghapusnya jika ada yang salah ketik.",
+      "Gunakan tombol 'Hapus Semua' jika Anda ingin mengosongkan daftar dan mengetik ulang dari awal.",
+    ],
+  },
+  {
+    id: "btn-add-new-mindmap",
+    category: "input",
+    title: "Tombol 'Tambah Mind Map Baru ke Kanvas'",
+    badge: "Banyak Diagram",
+    icon: <PlusCircle className="w-4 h-4 text-white" />,
+    summary: "Membuat diagram baru di halaman kerja yang sama tanpa menghapus diagram yang sudah ada.",
+    steps: [
+      "Setelah diagram pertama Anda selesai, klik tombol 'Tambah Mind Map Baru'.",
+      "Formulir di kiri akan disiapkan kosong untuk topik berikutnya, sementara diagram lama di layar tetap aman.",
+      "Ketik topik baru Anda lalu klik buat. Sekarang Anda bisa memiliki beberapa diagram sekaligus di satu layar!",
+    ],
+    tips: "Sangat berguna jika Anda ingin membandingkan dua rencana atau membuat beberapa materi di satu tempat.",
+  },
+  {
+    id: "btn-generate-map",
+    category: "input",
+    title: "Tombol 'Buat / Perbarui Mind Map' (Tombol Utama)",
+    badge: "Tombol Utama",
+    icon: <Network className="w-4 h-4 text-white" />,
+    summary: "Tombol besar berwarna biru kehijauan untuk langsung menggambar atau memperbarui diagram di kanvas.",
+    steps: [
+      "Setelah judul dan daftar nama selesai Anda isi, klik tombol besar ini.",
+      "Aplikasi akan langsung menyusun posisi kotak-kotak ide dan menarik garis penghubung secara otomatis dalam sekejap.",
+      "Layar kanvas akan langsung mengarahkan pandangan ke tengah diagram baru Anda.",
+    ],
+  },
+];

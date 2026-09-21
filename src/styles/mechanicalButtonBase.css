@@ -1,0 +1,375 @@
+/* Base Mechanical Sci-Fi Button core styles */
+.wx-wrap {
+  --wx-titanium: #2a2d33;
+  --wx-titanium-lt: #3a3e45;
+  --wx-steel: #1a1c21;
+  --wx-gunmetal: #43474e;
+  --wx-silver: #c8ccd4;
+  --wx-silver-hi: #eef0f4;
+  --wx-yellow: #06b6d4;
+  --wx-yellow-dim: #0891b2;
+  --wx-yellow-glow: rgba(6, 182, 212, 0.45);
+  --wx-danger: #ff3b3b;
+  --wx-green: #39ff6e;
+  --wx-med: 0.3s;
+  --wx-snap: cubic-bezier(0.77, 0, 0.175, 1);
+  --wx-btn-w: 13.75em;
+  --wx-btn-h: 4.375em;
+  --wx-radius: 6px;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  vertical-align: middle;
+}
+
+/* Color Themes */
+.wx-wrap--gold {
+  --wx-yellow: #f5c518;
+  --wx-yellow-dim: #9a7d12;
+  --wx-yellow-glow: rgba(245, 197, 24, 0.45);
+}
+.wx-wrap--cyan {
+  --wx-yellow: #06b6d4;
+  --wx-yellow-dim: #0891b2;
+  --wx-yellow-glow: rgba(6, 182, 212, 0.5);
+}
+.wx-wrap--danger {
+  --wx-yellow: #ff3b3b;
+  --wx-yellow-dim: #991b1b;
+  --wx-yellow-glow: rgba(255, 59, 59, 0.5);
+}
+.wx-wrap--emerald {
+  --wx-yellow: #39ff6e;
+  --wx-yellow-dim: #059669;
+  --wx-yellow-glow: rgba(57, 255, 110, 0.45);
+}
+.wx-wrap--neutral {
+  --wx-yellow: #94a3b8;
+  --wx-yellow-dim: #475569;
+  --wx-yellow-glow: rgba(148, 163, 184, 0.35);
+}
+
+/* Sizing Modifiers */
+.wx-wrap--xs { font-size: 8px; }
+.wx-wrap--sm { font-size: 9.5px; }
+.wx-wrap--md { font-size: 11px; }
+.wx-wrap--lg { font-size: 13.5px; }
+.wx-wrap--wide { font-size: 11px; --wx-btn-w: 18em; }
+.wx-wrap--full { font-size: 11px; --wx-btn-w: 100%; width: 100%; }
+
+/* Core Button & Surface Layout */
+.wx-btn {
+  position: relative;
+  display: block;
+  width: var(--wx-btn-w);
+  height: var(--wx-btn-h);
+  cursor: pointer;
+  animation: wx-servo 3s ease-in-out infinite;
+  z-index: 1;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  text-align: inherit;
+  font-family: inherit;
+}
+.wx-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  animation: none;
+  filter: grayscale(0.85);
+}
+.wx-btn:focus-visible {
+  outline: 2px solid var(--wx-yellow);
+  outline-offset: 6px;
+  border-radius: var(--wx-radius);
+}
+.wx-btn:active, .wx-btn.wx-btn--active {
+  animation: none;
+}
+
+.wx-face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--wx-radius);
+  z-index: 10;
+  overflow: hidden;
+  background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 1px,
+      rgba(255, 255, 255, 0.025) 1px,
+      rgba(255, 255, 255, 0.025) 2px
+    ),
+    linear-gradient(
+      180deg,
+      var(--wx-titanium-lt) 0%,
+      var(--wx-titanium) 8%,
+      var(--wx-steel) 50%,
+      var(--wx-titanium) 92%,
+      var(--wx-gunmetal) 100%
+    );
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.6),
+    0 6px 16px rgba(0, 0, 0, 0.5),
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.5),
+    inset 1px 0 0 rgba(255, 255, 255, 0.06),
+    inset -1px 0 0 rgba(0, 0, 0, 0.3),
+    0 0 30px var(--wx-yellow-glow);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.wx-dot-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  pointer-events: auto;
+  cursor: pointer;
+  border-radius: var(--wx-radius);
+  background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+
+.wx-text-main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 25;
+  font-size: 0.85em;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--wx-silver-hi, #f3f4f6);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 6px var(--wx-yellow-glow));
+  user-select: none;
+  white-space: nowrap;
+  width: calc(100% - 34px);
+  max-width: calc(100% - 34px);
+  overflow: visible;
+  text-align: center;
+  background: transparent !important;
+  background-color: transparent !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.wx-icon-wrapper {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  letter-spacing: normal !important;
+}
+
+.wx-reflection {
+  width: var(--wx-btn-w);
+  height: 1.5em;
+  margin-top: 3px;
+  background: linear-gradient(180deg, rgba(42, 45, 51, 0.18), transparent);
+  border-radius: 0 0 50% 50%;
+  filter: blur(3px);
+  transform: scaleY(-1);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.3), transparent);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   LIGHT MODE MECHANICAL BUTTON (Card Background: White, Text: Dark/Black)
+   ========================================================================== */
+html.light .wx-wrap,
+[data-theme="light"] .wx-wrap {
+  --wx-titanium: #ffffff;
+  --wx-titanium-lt: #ffffff;
+  --wx-steel: #f8fafc;
+  --wx-gunmetal: #f1f5f9;
+  --wx-silver: #475569;
+  --wx-silver-hi: #0f172a;
+  --wx-yellow: #0891b2;
+  --wx-yellow-dim: #0e7490;
+  --wx-yellow-glow: rgba(8, 145, 178, 0.25);
+}
+
+html.light .wx-wrap--gold,
+[data-theme="light"] .wx-wrap--gold {
+  --wx-yellow: #d97706;
+  --wx-yellow-dim: #b45309;
+  --wx-yellow-glow: rgba(217, 119, 6, 0.25);
+}
+
+html.light .wx-wrap--emerald,
+[data-theme="light"] .wx-wrap--emerald {
+  --wx-yellow: #059669;
+  --wx-yellow-dim: #047857;
+  --wx-yellow-glow: rgba(5, 150, 105, 0.25);
+}
+
+html.light .wx-wrap--danger,
+[data-theme="light"] .wx-wrap--danger {
+  --wx-yellow: #dc2626;
+  --wx-yellow-dim: #b91c1c;
+  --wx-yellow-glow: rgba(220, 38, 38, 0.25);
+}
+
+html.light .wx-wrap--neutral,
+[data-theme="light"] .wx-wrap--neutral {
+  --wx-yellow: #64748b;
+  --wx-yellow-dim: #475569;
+  --wx-yellow-glow: rgba(100, 116, 139, 0.2);
+}
+
+html.light .wx-face,
+[data-theme="light"] .wx-face {
+  background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f8fafc 18%,
+      #f1f5f9 50%,
+      #f8fafc 82%,
+      #ffffff 100%
+    ) !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow:
+    0 2px 5px rgba(15, 23, 42, 0.08),
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 2px rgba(15, 23, 42, 0.05),
+    0 0 12px rgba(8, 145, 178, 0.08) !important;
+}
+
+html.light .wx-text-main,
+[data-theme="light"] .wx-text-main {
+  color: #0f172a !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+
+html.light .wx-text-main span,
+[data-theme="light"] .wx-text-main span {
+  color: #0f172a !important;
+}
+
+html.light .wx-text-main svg,
+html.light .wx-text-main .text-white,
+[data-theme="light"] .wx-text-main svg,
+[data-theme="light"] .wx-text-main .text-white {
+  color: #0891b2 !important;
+}
+
+html.light .wx-wrap--gold .wx-text-main svg,
+[data-theme="light"] .wx-wrap--gold .wx-text-main svg {
+  color: #d97706 !important;
+}
+
+html.light .wx-wrap--emerald .wx-text-main svg,
+[data-theme="light"] .wx-wrap--emerald .wx-text-main svg {
+  color: #059669 !important;
+}
+
+html.light .wx-wrap--danger .wx-text-main svg,
+[data-theme="light"] .wx-wrap--danger .wx-text-main svg {
+  color: #dc2626 !important;
+}
+
+html.light .wx-wrap--neutral .wx-text-main svg,
+[data-theme="light"] .wx-wrap--neutral .wx-text-main svg {
+  color: #64748b !important;
+}
+
+html.light .wx-panel,
+[data-theme="light"] .wx-panel {
+  background: linear-gradient(90deg, #e2e8f0, #f1f5f9, #ffffff) !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 1px 3px rgba(15, 23, 42, 0.08) !important;
+}
+
+html.light .wx-panel::before,
+[data-theme="light"] .wx-panel::before {
+  background: rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+html.light .wx-screw,
+[data-theme="light"] .wx-screw {
+  background: radial-gradient(circle at 35% 35%, #ffffff, #e2e8f0 55%, #cbd5e1 100%) !important;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 1px rgba(15, 23, 42, 0.12),
+    0 1px 2px rgba(15, 23, 42, 0.08) !important;
+}
+
+html.light .wx-screw::before,
+html.light .wx-screw::after,
+[data-theme="light"] .wx-screw::before,
+[data-theme="light"] .wx-screw::after {
+  background: #94a3b8 !important;
+  box-shadow: none !important;
+}
+
+html.light .wx-dot-pattern,
+[data-theme="light"] .wx-dot-pattern {
+  background-image: radial-gradient(circle at 2px 2px, rgba(15, 23, 42, 0.03) 1px, transparent 1px) !important;
+}
+
+html.light .wx-btn:hover:not(:disabled) .wx-face,
+[data-theme="light"] .wx-btn:hover:not(:disabled) .wx-face {
+  background: #f0fdfa !important;
+  border-color: #0891b2 !important;
+  box-shadow:
+    0 4px 12px rgba(8, 145, 178, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+html.light .wx-btn:hover:not(:disabled) .wx-text-main,
+html.light .wx-btn:hover:not(:disabled) .wx-text-main span,
+[data-theme="light"] .wx-btn:hover:not(:disabled) .wx-text-main,
+[data-theme="light"] .wx-btn:hover:not(:disabled) .wx-text-main span {
+  color: #0891b2 !important;
+}
+
+html.light .wx-btn:active:not(:disabled) .wx-face,
+html.light .wx-btn.wx-btn--active .wx-face,
+[data-theme="light"] .wx-btn:active:not(:disabled) .wx-face,
+[data-theme="light"] .wx-btn.wx-btn--active .wx-face {
+  background: #ecfeff !important;
+  border-color: #06b6d4 !important;
+  box-shadow:
+    inset 0 2px 4px rgba(8, 145, 178, 0.15),
+    0 0 8px rgba(8, 145, 178, 0.2) !important;
+}
+
+html.light .wx-btn.wx-btn--active .wx-text-main,
+html.light .wx-btn.wx-btn--active .wx-text-main span,
+[data-theme="light"] .wx-btn.wx-btn--active .wx-text-main,
+[data-theme="light"] .wx-btn.wx-btn--active .wx-text-main span {
+  color: #0891b2 !important;
+  font-weight: 800 !important;
+}
+
+html.light .wx-glow,
+[data-theme="light"] .wx-glow {
+  box-shadow: 0 0 10px rgba(8, 145, 178, 0.12), 0 0 20px rgba(8, 145, 178, 0.05) !important;
+}
+
+html.light .wx-pulse,
+[data-theme="light"] .wx-pulse {
+  border-color: rgba(8, 145, 178, 0.2) !important;
+}
+
+html.light .wx-ambient,
+[data-theme="light"] .wx-ambient {
+  opacity: 0.03 !important;
+}
+
+html.light .wx-reflection,
+[data-theme="light"] .wx-reflection {
+  background: linear-gradient(180deg, rgba(203, 213, 225, 0.2), transparent) !important;
+}
+

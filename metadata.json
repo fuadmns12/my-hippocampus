@@ -1,0 +1,8 @@
+{
+  "name": "My Hippocampus",
+  "description": "Aplikasi mind mapping interaktif dengan beragam tata letak, tema visual, multi-root kanvas, catatan cabang, pemutar musik YouTube, dan panduan fitur interaktif.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
