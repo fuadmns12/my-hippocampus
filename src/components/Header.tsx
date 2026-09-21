@@ -114,7 +114,7 @@ export const Header: React.FC<HeaderProps> = ({
             onSelectRoot={onSelectRoot}
           />
 
-          {/* Right Action Controls: Preset, Simpan, Memory Card, Upload, Unduh, Settings, Panduan */}
+          {/* Right Action Controls: Preset, Simpan, Memory Card, Upload, Unduh, Settings, Panduan, Fullscreen */}
           <HeaderRightControls
             mindMapData={mindMapData}
             isSaved={isSaved}
@@ -130,6 +130,7 @@ export const Header: React.FC<HeaderProps> = ({
             onExportMarkdown={onExportMarkdown}
             onOpenGuide={() => setShowGuideModal(true)}
             onOpenSettings={() => setShowSettingsModal(true)}
+            onToggleFullscreenPage={onToggleFullscreen}
             isHistoryOpen={isHistoryOpen}
             isUploadOpen={isUploadOpen}
             isGuideOpen={showGuideModal}

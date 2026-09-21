@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { HardDrive, Upload, HelpCircle, Settings } from "lucide-react";
+import { HardDrive, Upload, HelpCircle, Settings, Maximize2 } from "lucide-react";
 import { PresetTemplate, MindMapData } from "../../types";
 import { PresetSelectorDropdown } from "./PresetSelectorDropdown";
 import { HeaderSaveButton } from "./HeaderSaveButton";
@@ -21,6 +21,7 @@ export interface HeaderRightControlsProps {
   onExportMarkdown: () => void;
   onOpenGuide: () => void;
   onOpenSettings: () => void;
+  onToggleFullscreenPage?: () => void;
   isHistoryOpen?: boolean;
   isUploadOpen?: boolean;
   isGuideOpen?: boolean;
@@ -42,6 +43,7 @@ export const HeaderRightControls: React.FC<HeaderRightControlsProps> = ({
   onExportMarkdown,
   onOpenGuide,
   onOpenSettings,
+  onToggleFullscreenPage,
   isHistoryOpen = false,
   isUploadOpen = false,
   isGuideOpen = false,
@@ -180,6 +182,27 @@ export const HeaderRightControls: React.FC<HeaderRightControlsProps> = ({
       >
         PANDUAN
       </MechanicalButton>
+
+      {/* Tombol Fullscreen Seluruh Halaman */}
+      {onToggleFullscreenPage && (
+        <MechanicalButton
+          id="btn-fullscreen-page"
+          type="button"
+          size="xs"
+          variant="cyan"
+          onClick={() => {
+            setShowPresetMenu(false);
+            setShowExportMenu(false);
+            onToggleFullscreenPage();
+          }}
+          title="Layar Penuh Seluruh Halaman (F11 atau ESC untuk keluar)"
+          icon={
+            <Maximize2 className="w-3.5 h-3.5 text-white" />
+          }
+        >
+          FULLSCREEN
+        </MechanicalButton>
+      )}
     </div>
   );
 };
