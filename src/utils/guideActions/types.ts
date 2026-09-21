@@ -30,4 +30,4 @@ export interface GuideActionMeta {
   description: string;
 }
 
-export const GUIDE_ACTION_EVENT = "mate-guide-action";
+export const GUIDE_ACTION_EVENT = "my-hippocampus-guide-action";

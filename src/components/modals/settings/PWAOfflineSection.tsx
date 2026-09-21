@@ -66,7 +66,7 @@ export const PWAOfflineSection: React.FC<PWAOfflineSectionProps> = ({
             </div>
             <p className="text-[11px] sm:text-xs text-neutral-400 mt-1">
               {isOfflineEnabled
-                ? "Berkas tampilan aplikasi tersimpan di memori lokal. Mate dapat dibuka saat offline atau mode pesawat."
+                ? "Berkas tampilan aplikasi tersimpan di memori lokal. My Hippocampus dapat dibuka saat offline atau mode pesawat."
                 : "Aplikasi berjalan online tanpa mengunduh berkas cache ke perangkat. Hemat kuota dan memori penyimpanan."}
             </p>
           </div>

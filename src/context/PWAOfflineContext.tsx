@@ -9,7 +9,11 @@ import React, {
 } from "react";
 import { safeStorage } from "../utils/safeStorage";
 
-const PWA_OFFLINE_STORAGE_KEY = "mate_pwa_offline_confirmed";
+/**
+ * Kunci penyimpanan preferensi mode offline (dipakai juga oleh `OfflineIndicator`
+ * agar hanya ada satu sumber kebenaran untuk nama kunci).
+ */
+export const PWA_OFFLINE_STORAGE_KEY = "my_hippocampus_pwa_offline_confirmed";
 
 export interface PWAOfflineContextType {
   isOfflineEnabled: boolean;

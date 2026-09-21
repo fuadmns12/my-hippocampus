@@ -52,7 +52,7 @@ export const ErrorFallbackView: React.FC<ErrorFallbackViewProps> = ({
       const dump: Record<string, string | null> = {};
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key && (key.includes("mindmap") || key.includes("memory") || key.includes("mate") || key.includes("hippocampus"))) {
+        if (key && (key.includes("mindmap") || key.includes("memory") || key.includes("my_hippocampus") || key.includes("hippocampus"))) {
           dump[key] = localStorage.getItem(key);
         }
       }

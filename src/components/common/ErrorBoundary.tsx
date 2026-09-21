@@ -34,7 +34,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       error,
       errorInfo,
     });
-    console.error("[MATE MIND MAP] Intercepted runtime error:", error, errorInfo);
+    console.error("[MY HIPPOCAMPUS] Intercepted runtime error:", error, errorInfo);
   }
 
   handleReset = (): void => {

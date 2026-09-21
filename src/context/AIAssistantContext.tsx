@@ -14,8 +14,8 @@ import {
 import { generateGuideResponse } from "../services/aiAssistantService";
 import { soundFx } from "../utils/soundEffects";
 
-const STORAGE_KEY_SETTINGS = "mate_website_guide_settings";
-const STORAGE_KEY_MESSAGES = "mate_website_guide_messages";
+const STORAGE_KEY_SETTINGS = "my_hippocampus_website_guide_settings";
+const STORAGE_KEY_MESSAGES = "my_hippocampus_website_guide_messages";
 
 const DEFAULT_SETTINGS: AIAssistantSettings = {
   isEnabled: true,

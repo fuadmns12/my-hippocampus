@@ -21,7 +21,7 @@ export const AIAssistantFAB: React.FC = () => {
         id="ga-fab-website-guide-bot"
         type="button"
         aria-label="Tanya Bot Panduan Website"
-        data-testid="mate-guide-fab"
+        data-testid="my-hippocampus-guide-fab"
         onClick={() => {
           soundFx.play("click");
           setIsChatOpen(true);

@@ -8,6 +8,18 @@ html, body {
   scrollbar-gutter: stable;
   min-height: 100%;
   -webkit-tap-highlight-color: transparent;
+}
+
+/*
+  Cegah pull-to-refresh di HP — cukup pada `html` saja.
+  PENTING: `overscroll-behavior-y: contain` pada `body` MEMATIKAN scroll-chaining.
+  Karena `overflow-x: hidden` membuat `body` menjadi scroll container (overflow-y
+  terhitung `auto`) yang tidak bisa di-scroll, gestur jari berhenti di situ dan
+  halaman tidak ikut bergeser — khususnya terasa di HP mode landscape.
+  Terbukti lewat uji browser: dengan `contain` di body swipe 1 jari menghasilkan
+  scroll 0px; setelah `auto` langsung normal.
+*/
+html {
   overscroll-behavior-y: contain;
 }
 

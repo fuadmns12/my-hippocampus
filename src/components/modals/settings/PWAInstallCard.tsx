@@ -43,8 +43,8 @@ export const PWAInstallCard: React.FC<PWAInstallCardProps> = ({
         <div className="flex items-center gap-2 p-2.5 rounded-lg bg-black border border-emerald-500/40 text-white text-xs font-medium">
           <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
           <span>
-            Aplikasi Mate telah terpasang di perangkat Anda sebagai aplikasi
-            standalone.
+            Aplikasi My Hippocampus telah terpasang di perangkat Anda sebagai
+            aplikasi standalone.
           </span>
         </div>
       ) : isInstallable ? (
@@ -59,7 +59,7 @@ export const PWAInstallCard: React.FC<PWAInstallCardProps> = ({
             PASANG APLIKASI KE LAYAR UTAMA (INSTALL PWA)
           </button>
           <p className="text-[10px] text-center text-neutral-400 font-mono">
-            Buka Mate seperti aplikasi native langsung dari home screen.
+            Buka My Hippocampus seperti aplikasi native langsung dari home screen.
           </p>
         </div>
       ) : isIOS ? (
@@ -96,8 +96,8 @@ export const PWAInstallCard: React.FC<PWAInstallCardProps> = ({
                 .
               </li>
               <li>
-                Ketuk <strong>Tambah (Add)</strong> di pojok kanan atas. Ikon
-                Mate akan muncul di layar utama iOS Anda!
+                Ketuk <strong>Tambah (Add)</strong> di pojok kanan atas. Ikon My
+                Hippocampus akan muncul di layar utama iOS Anda!
               </li>
             </ol>
           )}
@@ -116,7 +116,7 @@ export const PWAInstallCard: React.FC<PWAInstallCardProps> = ({
       {installSuccessMessage && (
         <div className="mt-2 flex items-center gap-2 p-2 rounded-lg bg-black border border-emerald-500/50 text-white text-xs">
           <CheckCircle2 className="w-4 h-4 text-white shrink-0" />
-          Instalasi berhasil dimulai! Terima kasih telah menginstal Mate.
+          Instalasi berhasil dimulai! Terima kasih telah menginstal My Hippocampus.
         </div>
       )}
     </div>

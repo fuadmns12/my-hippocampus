@@ -50,7 +50,7 @@ export function useGlobalAsyncErrorListener({
         return;
       }
 
-      console.warn("[MATE MIND MAP] Intercepted Unhandled Rejection:", reason);
+      console.warn("[MY HIPPOCAMPUS] Intercepted Unhandled Rejection:", reason);
 
       if (onNotifyError && reasonMsg) {
         onNotifyError(`Peringatan: ${reasonMsg.slice(0, 100)}`);
@@ -71,7 +71,7 @@ export function useGlobalAsyncErrorListener({
         return;
       }
 
-      console.warn("[MATE MIND MAP] Intercepted Window Error:", event.error || message);
+      console.warn("[MY HIPPOCAMPUS] Intercepted Window Error:", event.error || message);
 
       if (onNotifyError && message) {
         onNotifyError(`Kendala Sistem: ${message.slice(0, 100)}`);

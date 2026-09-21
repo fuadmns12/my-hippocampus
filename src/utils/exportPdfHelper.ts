@@ -113,7 +113,7 @@ export async function exportToPdfDocument(
     month: "long",
     year: "numeric",
   });
-  doc.text(`Mate Mind Map • ${dateStr}`, pageWidth - margin, headerY, {
+  doc.text(`My Hippocampus • ${dateStr}`, pageWidth - margin, headerY, {
     align: "right",
   });
 

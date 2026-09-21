@@ -48,10 +48,10 @@ export interface YouTubeMusicContextValue {
   resetDefaultPlaylist: () => void;
 }
 
-export const STORAGE_KEY_URL = "mate_yt_music_url";
-export const STORAGE_KEY_VOL = "mate_yt_music_volume";
-export const STORAGE_KEY_MUTED = "mate_yt_music_muted";
-export const STORAGE_KEY_FLOATING = "mate_yt_music_show_floating";
-export const STORAGE_KEY_PLAYLIST = "mate_yt_music_playlist";
-export const STORAGE_KEY_AUTO_ADVANCE = "mate_yt_music_auto_advance";
-export const STORAGE_KEY_ACTIVE_TRACK = "mate_yt_music_active_track";
+export const STORAGE_KEY_URL = "my_hippocampus_yt_music_url";
+export const STORAGE_KEY_VOL = "my_hippocampus_yt_music_volume";
+export const STORAGE_KEY_MUTED = "my_hippocampus_yt_music_muted";
+export const STORAGE_KEY_FLOATING = "my_hippocampus_yt_music_show_floating";
+export const STORAGE_KEY_PLAYLIST = "my_hippocampus_yt_music_playlist";
+export const STORAGE_KEY_AUTO_ADVANCE = "my_hippocampus_yt_music_auto_advance";
+export const STORAGE_KEY_ACTIVE_TRACK = "my_hippocampus_yt_music_active_track";

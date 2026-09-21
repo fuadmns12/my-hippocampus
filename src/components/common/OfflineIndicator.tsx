@@ -2,8 +2,7 @@ import React from "react";
 import { WifiOff, AlertTriangle } from "lucide-react";
 import { useOnlineStatus } from "../../hooks/useOnlineStatus";
 import { safeStorage } from "../../utils/safeStorage";
-
-const PWA_OFFLINE_STORAGE_KEY = "mate_pwa_offline_confirmed";
+import { PWA_OFFLINE_STORAGE_KEY } from "../../context/PWAOfflineContext";
 
 export const OfflineIndicator: React.FC = () => {
   const isOnline = useOnlineStatus();
