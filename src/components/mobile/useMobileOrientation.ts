@@ -55,7 +55,6 @@ export function useMobileOrientation(): MobileOrientationState {
         screen.orientation &&
         typeof (screen.orientation as any).lock === "function"
     );
-    setLockSupported(hasLockApi);
 
     // If mobile & in portrait, strictly enforce landscape (no portrait allowed)
     if (isMobile && isCurrentPortrait) {
